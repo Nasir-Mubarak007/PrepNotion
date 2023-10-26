@@ -2,8 +2,9 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Appbar } from "react-native-paper";
 
-import SelectBar from "../../ui/SelectBar";
-import Input from "../../Input";
+import SelectBar from "../components/ui/SelectBar";
+import Input from "../components/Input";
+import PaperInput from "../components/PaperInput";
 
 const Exams = [
   { name: "JAMB", value: "jamb" },
@@ -12,11 +13,11 @@ const Exams = [
   { name: "NABTEB", value: "nabteb" },
 ];
 
-const ExamMode = ({ navigation }) => {
+const AllExams = ({ navigation }) => {
   function handleTap(exam) {
     switch (exam) {
       case "jamb":
-        navigation.navigate("");
+        navigation.navigate("home");
         break;
       case "waec":
         return navigation.navigate("StudyMode");
@@ -32,20 +33,12 @@ const ExamMode = ({ navigation }) => {
     }
   }
   return (
-    <View>
-      <Appbar.Header style={styles.Header}>
-        <Appbar.BackAction
-          style={{ borderRadius: 5, borderWidth: 1, width: 30, height: 30 }}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <Appbar.Content title={"Exam Mode"} />
+    <View style={{ gap: 12 }}>
+      <Appbar.Header style={styles.Header} mode="center-aligned">
+        <Appbar.Content title={"All Exams"} />
       </Appbar.Header>
 
-      <View style={{ marginHorizontal: 6 }}>
-        <Input placeholder="Search for any Exam" value="" />
-      </View>
+      <PaperInput placeholder="Search for any Exam" />
 
       <View style={{ marginTop: 9, marginHorizontal: 9 }}>
         <Text style={styles.heading}>Select Exam</Text>
@@ -62,14 +55,14 @@ const ExamMode = ({ navigation }) => {
   );
 };
 
-export default ExamMode;
+export default AllExams;
 
 const styles = StyleSheet.create({
   Header: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: "#CCEBFF",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    // height: 100,
+    height: 95,
   },
   heading: {
     fontSize: 18,
