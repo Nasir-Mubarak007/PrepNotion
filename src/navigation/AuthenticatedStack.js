@@ -22,11 +22,10 @@ import Nabteb from "../components/Exams/Nabteb";
 import Waec from "../components/Exams/Waec";
 import Neco from "../components/Exams/Neco";
 import Info from "../components/profile/Info";
-import InfoHeader from "../components/infoHeader";
-import InfoEdit from "../components/profile/InfoEdit";
 import Increase from "../components/profile/Increase";
 import BuyPoints from "../components/profile/BuyPoints";
 import Security from "../components/profile/Security";
+import ChangePassword from "../components/profile/ChangePassword";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -35,7 +34,7 @@ function MyTabs() {
   return (
     <Tab.Navigator
       // screenOptions={{ headerShown: false }}
-      initialRouteName="Feed"
+      initialRouteName="home"
       activeColor="black"
       inactiveColor="#1B1C1E"
       barStyle={{ height: 65 }}
@@ -168,10 +167,10 @@ const AuthenticatedStack = () => {
       />
 
       <Stack.Screen
-        name="infoEdit"
-        component={InfoEdit}
+        name="changePassword"
+        component={ChangePassword}
         options={{
-          title: "My Information",
+          title: "Security",
         }}
       />
 
