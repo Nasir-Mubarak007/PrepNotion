@@ -6,7 +6,7 @@ import { Surface } from "react-native-paper";
 const SelectBar = ({ item, onTap }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onTap}>
-      <Surface elevation={1} style={styles.surface}>
+      <Surface elevation={2} style={styles.surface} mode="elevated">
         <Text style={styles.text}>{item}</Text>
         <AntDesign name="right" size={16} />
       </Surface>
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#D6C4EE1A",
     borderRadius: 5,
-    height: 45,
+    height: 50,
+    margin: 5,
   },
   text: {
     fontSize: 16,

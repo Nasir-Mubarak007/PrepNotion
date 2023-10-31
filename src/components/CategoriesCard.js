@@ -1,9 +1,12 @@
 import { StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 import React from "react";
 
-const CategoriesCard = ({ color, logo, title }) => {
+const CategoriesCard = ({ color, logo, title, onTap }) => {
   return (
-    <TouchableOpacity style={[styles.container, { backgroundColor: color }]}>
+    <TouchableOpacity
+      style={[styles.container, { backgroundColor: color }]}
+      onPress={onTap}
+    >
       <Image
         source={require("../assets/images/jamb.png")}
         width={36.85}
@@ -25,5 +28,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 4,
     borderRadius: 5,
+    margin: 5,
+    // marginLeft: 0,
   },
 });

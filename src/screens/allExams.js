@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Appbar } from "react-native-paper";
+import { Appbar, Searchbar } from "react-native-paper";
 
 import SelectBar from "../components/ui/SelectBar";
 import Input from "../components/Input";
@@ -17,28 +17,33 @@ const AllExams = ({ navigation }) => {
   function handleTap(exam) {
     switch (exam) {
       case "jamb":
-        navigation.navigate("home");
+        navigation.navigate("JAMB");
         break;
       case "waec":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("WAEC");
         break;
       case "neco":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NECO");
         break;
       case "nabteb":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NABTEB");
         break;
       default:
         alert("not handled");
     }
   }
   return (
-    <View style={{ gap: 12 }}>
+    <View style={{ gap: 20, flex: 1 }}>
       <Appbar.Header style={styles.Header} mode="center-aligned">
         <Appbar.Content title={"All Exams"} />
       </Appbar.Header>
 
-      <PaperInput placeholder="Search for any Exam" />
+      <View style={{ marginHorizontal: 10 }}>
+        <Searchbar
+          placeholder="Search for any Exam"
+          style={{ height: 45, alignItems: "center", borderRadius: 5 }}
+        />
+      </View>
 
       <View style={{ marginTop: 9, marginHorizontal: 9 }}>
         <Text style={styles.heading}>Select Exam</Text>
@@ -48,7 +53,7 @@ const AllExams = ({ navigation }) => {
           renderItem={({ item }) => (
             <SelectBar item={item.name} onTap={() => handleTap(item.value)} />
           )}
-          contentContainerStyle={{ gap: 9, marginTop: 20 }}
+          contentContainerStyle={{ gap: 10, marginTop: 20 }}
         />
       </View>
     </View>

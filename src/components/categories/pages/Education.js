@@ -13,22 +13,22 @@ const Exams = [
   { name: "NABTEB", value: "nabteb" },
 ];
 
-const Education = () => {
-  const navigation = useNavigation();
+const Education = ({ navigation }) => {
+  // const navigation = useNavigation();
 
   function handleTap(exam) {
     switch (exam) {
       case "jamb":
-        navigation.navigate("ExamMode");
+        navigation.navigate("JAMB");
         break;
       case "waec":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("WAEC");
         break;
       case "neco":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NECO");
         break;
       case "nabteb":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NABTEB");
         break;
       default:
         alert("not handled");
@@ -36,7 +36,7 @@ const Education = () => {
   }
   return (
     <View>
-      <Appbar.Header style={styles.Header}>
+      {/* <Appbar.Header style={styles.Header}>
         <Appbar.BackAction
           style={{ borderRadius: 5, borderWidth: 1, width: 30, height: 30 }}
           onPress={() => {
@@ -44,7 +44,7 @@ const Education = () => {
           }}
         />
         <Appbar.Content title={"Education"} />
-      </Appbar.Header>
+      </Appbar.Header> */}
 
       <View style={{ marginHorizontal: 6 }}>
         <Input placeholder="Search for any Exam" value="" />

@@ -22,16 +22,19 @@ const Categories = [
     color: "#EBE3E0",
     logo: "../assets/image/jamb",
     title: "Education",
+    value: "Education",
   },
   {
     color: "#FFF0E6",
     logo: "../assets/image/jamb",
     title: "Data Analysis",
+    value: "DataAnalyst",
   },
   {
     color: "#E8F1FB",
     logo: "../assets/image/jamb",
     title: "Database",
+    value: "Database",
   },
 ];
 
@@ -55,9 +58,26 @@ export default function Home({ navigation }) {
     }
   }
 
+  function handleCategory(categories) {
+    switch (categories) {
+      case "Education":
+        navigation.navigate("Education");
+        break;
+      case "DataAnalyst":
+        navigation.navigate("DataAnalyst");
+        break;
+      case "Database":
+        navigation.navigate("DataBase");
+        break;
+
+      default:
+        break;
+    }
+  }
+
   const { Header } = useSafeAreaInsets();
   return (
-    <View style={{ gap: 12, flex: 1 }}>
+    <View style={{ gap: 20, flex: 1 }}>
       <View style={styles.Header}>
         <View style={{ maxWidth: "80%" }}>
           <Text style={{ fontSize: 24, fontWeight: "600" }}>Hello Ibrahim</Text>
@@ -67,7 +87,10 @@ export default function Home({ navigation }) {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.Avatar} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.Avatar}
+          onPress={() => navigation.navigate("profile")}
+        >
           <Avatar.Image
             size={40}
             source={require("../assets/images/avatar.png")}
@@ -75,23 +98,36 @@ export default function Home({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <PaperInput placeholder={"Search for Category, exam, year"} />
+      <View style={{ marginHorizontal: 10 }}>
+        <Searchbar
+          placeholder="Search for Category, exam, year"
+          style={{ height: 48, alignItems: "center", borderRadius: 5 }}
+        />
+      </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ margin: 5, marginRight: 0, gap: 10 }}>
+        <View style={{ marginHorizontal: 10, marginRight: 0, gap: 10 }}>
           <Text style={styles.heading}>Recently Viewed</Text>
           <FlatList
             data={examTypes}
             renderItem={({ item }) => (
               <Card logo={item.logo} title={item.title} />
             )}
-            contentContainerStyle={{ columnGap: 17, marginLeft: 5 }}
+            contentContainerStyle={{ columnGap: 17 }}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
 
-        <View style={{ margin: 5, marginRight: 0, marginBottom: 9, gap: 10 }}>
+        <View
+          style={{
+            margin: 10,
+            marginRight: 0,
+            marginTop: 20,
+            marginBottom: 9,
+            gap: 10,
+          }}
+        >
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Categories</Text>
             <TouchableOpacity onPress={() => navigation.navigate("categories")}>
@@ -105,15 +141,16 @@ export default function Home({ navigation }) {
                 color={item.color}
                 logo={item.logo}
                 title={item.title}
+                onTap={() => handleCategory(item.value)}
               />
             )}
-            contentContainerStyle={{ columnGap: 17, marginLeft: 5 }}
+            contentContainerStyle={{ columnGap: 17 }}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
         </View>
 
-        <View style={{ margin: 5, marginRight: 0, gap: 7 }}>
+        <View style={{ margin: 10, marginRight: 0, marginTop: 20, gap: 10 }}>
           <Text style={styles.heading}>Modes</Text>
 
           <FlatList
@@ -127,7 +164,7 @@ export default function Home({ navigation }) {
             )}
             contentContainerStyle={{
               columnGap: 17,
-              marginLeft: 5,
+              // marginLeft: 5,
             }}
             horizontal
             showsHorizontalScrollIndicator={false}

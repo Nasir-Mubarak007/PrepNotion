@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Appbar, Surface, TextInput } from "react-native-paper";
+import { Appbar, Searchbar, Surface, TextInput } from "react-native-paper";
 
 import SelectBar from "../components/ui/SelectBar";
 import PaperInput from "../components/PaperInput";
@@ -15,7 +15,6 @@ const Exams = [
 ];
 
 const Categories = ({ navigation }) => {
-  // const navigation = useNavigation();
   function handleTap(exam) {
     switch (exam) {
       case "program":
@@ -25,13 +24,13 @@ const Categories = ({ navigation }) => {
         return navigation.navigate("UI/UX");
         break;
       case "edu":
-        return navigation.navigate("education");
+        return navigation.navigate("Education");
         break;
       // case "data":
-      //   return navigation.navigate("dataAnalyst");
+      //   return navigation.navigate("DataAnalyst");
       //   break;
       // case "base":
-      //   return navigation.navigate("dataBase");
+      //   return navigation.navigate("DataBase");
       //   break;
       case "back":
         return navigation.navigate("Backend");
@@ -42,14 +41,19 @@ const Categories = ({ navigation }) => {
   }
 
   return (
-    <View style={{ gap: 12 }}>
+    <View style={{ gap: 20, flex: 1 }}>
       <Appbar.Header style={styles.Header} mode="center-aligned">
         <Appbar.Content title={"Categories"} />
       </Appbar.Header>
 
-      <PaperInput placeholder="Search for any Exam" />
+      <View style={{ marginHorizontal: 10 }}>
+        <Searchbar
+          placeholder="Search for any Exam"
+          style={{ height: 48, alignItems: "center", borderRadius: 5 }}
+        />
+      </View>
 
-      <View style={{ marginTop: 9, marginHorizontal: 9 }}>
+      <View style={{ flex: 1, marginTop: 9, marginHorizontal: 9 }}>
         <Text style={styles.heading}>Categories</Text>
 
         <FlatList
@@ -61,6 +65,7 @@ const Categories = ({ navigation }) => {
             gap: 10,
             marginTop: 20,
           }}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>

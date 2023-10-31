@@ -14,6 +14,19 @@ import Program from "../components/categories/pages/program";
 import StudyMode from "../components/home/pages/StudyMode";
 import Uiux from "../components/categories/pages/Uiux";
 import AllExams from "../screens/allExams";
+import CustomNavigationBar from "../components/CustomNavigationBar";
+import ProfileScreen from "../screens/profileScreen";
+import { Avatar } from "react-native-paper";
+import Jamb from "../components/Exams/Jamb";
+import Nabteb from "../components/Exams/Nabteb";
+import Waec from "../components/Exams/Waec";
+import Neco from "../components/Exams/Neco";
+import Info from "../components/profile/Info";
+import InfoHeader from "../components/infoHeader";
+import InfoEdit from "../components/profile/InfoEdit";
+import Increase from "../components/profile/Increase";
+import BuyPoints from "../components/profile/BuyPoints";
+import Security from "../components/profile/Security";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -70,7 +83,7 @@ function MyTabs() {
         component={AllExams}
         options={{
           title: "allExams",
-          tabBarLabel: "allExams",
+          tabBarLabel: "Exams",
           tabBarIcon: ({ color, focused }) => {
             focused;
             return (
@@ -84,31 +97,102 @@ function MyTabs() {
           },
         }}
       />
+      <Tab.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={{
+          title: "Profile",
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, focused }) => {
+            focused;
+            return (
+              // <MaterialCommunityIcons
+              //   name="book-outline"
+              //   size={20}
+              //   color={color}
+              //   focused={true}
+              // />
+              <Avatar.Image
+                size={24}
+                source={require("../assets/images/avatar.png")}
+              />
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
 const AuthenticatedStack = () => {
   return (
-    <Stack.Navigator screenOptions={{}} initialRouteName="Home">
+    <Stack.Navigator
+      screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}
+      initialRouteName="Home"
+    >
       <Stack.Screen
         name="Home"
         component={MyTabs}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="ExamMode" component={ExamMode} />
-      <Stack.Screen name="StudyMode" component={StudyMode} />
-      <Stack.Screen name="UI/UX" component={Uiux} />
       <Stack.Screen name="Backend" component={Backend} />
-      <Stack.Screen name="dataAnalyst" component={Data} />
-      <Stack.Screen name="dataBase" component={DataBase} />
-      <Stack.Screen name="education" component={Education} />
+      <Stack.Screen name="categories" component={Categories} />
       <Stack.Screen
-        name="home"
-        component={Home}
-        options={{ headerShown: false }}
+        name="DataAnalyst"
+        component={Data}
+        options={{ title: "Data Analysis" }}
       />
+      <Stack.Screen
+        name="ExamMode"
+        component={ExamMode}
+        options={{ title: "Exam Mode" }}
+      />
+      <Stack.Screen
+        name="StudyMode"
+        component={StudyMode}
+        options={{ title: "Study Mode" }}
+      />
+      <Stack.Screen name="UI/UX" component={Uiux} />
+      <Stack.Screen name="JAMB" component={Jamb} />
+      <Stack.Screen name="NABTEB" component={Nabteb} />
+      <Stack.Screen name="WAEC" component={Waec} />
+      <Stack.Screen name="NECO" component={Neco} />
+      <Stack.Screen
+        name="info"
+        component={Info}
+        options={{
+          title: "My Information",
+          headerShown: false,
+          // header: (props) => <InfoHeader {...props} />,
+        }}
+      />
+
+      <Stack.Screen
+        name="infoEdit"
+        component={InfoEdit}
+        options={{
+          title: "My Information",
+        }}
+      />
+
+      <Stack.Screen
+        name="DataBase"
+        component={DataBase}
+        options={{ title: "Database" }}
+      />
+      <Stack.Screen name="Education" component={Education} />
+      <Stack.Screen
+        name="buy"
+        component={BuyPoints}
+        options={{ title: "Buy Points" }}
+      />
+      <Stack.Screen name="Security" component={Security} />
       <Stack.Screen name="Programing" component={Program} />
+      <Stack.Screen
+        name="increase"
+        component={Increase}
+        options={{ title: "Increase Points" }}
+      />
     </Stack.Navigator>
   );
 };

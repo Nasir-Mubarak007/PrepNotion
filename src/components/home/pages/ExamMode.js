@@ -1,9 +1,9 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Appbar } from "react-native-paper";
 
 import SelectBar from "../../ui/SelectBar";
-import Input from "../../Input";
+import PaperInput from "../../PaperInput";
+import { Searchbar } from "react-native-paper";
 
 const Exams = [
   { name: "JAMB", value: "jamb" },
@@ -16,35 +16,28 @@ const ExamMode = ({ navigation }) => {
   function handleTap(exam) {
     switch (exam) {
       case "jamb":
-        navigation.navigate("");
+        navigation.navigate("JAMB");
         break;
       case "waec":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("WAEC");
         break;
       case "neco":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NECO");
         break;
       case "nabteb":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("NABTEB");
         break;
       default:
         alert("not handled");
     }
   }
   return (
-    <View>
-      <Appbar.Header style={styles.Header}>
-        <Appbar.BackAction
-          style={{ borderRadius: 5, borderWidth: 1, width: 30, height: 30 }}
-          onPress={() => {
-            navigation.goBack();
-          }}
+    <View style={{ paddingVertical: 10, gap: 10 }}>
+      <View style={{ marginHorizontal: 10 }}>
+        <Searchbar
+          placeholder="Search for any Exam"
+          style={{ height: 45, alignItems: "center", borderRadius: 5 }}
         />
-        <Appbar.Content title={"Exam Mode"} />
-      </Appbar.Header>
-
-      <View style={{ marginHorizontal: 6 }}>
-        <Input placeholder="Search for any Exam" value="" />
       </View>
 
       <View style={{ marginTop: 9, marginHorizontal: 9 }}>
@@ -55,7 +48,7 @@ const ExamMode = ({ navigation }) => {
           renderItem={({ item }) => (
             <SelectBar item={item.name} onTap={() => handleTap(item.value)} />
           )}
-          contentContainerStyle={{ gap: 9, marginTop: 20 }}
+          contentContainerStyle={{ gap: 10, marginTop: 20 }}
         />
       </View>
     </View>

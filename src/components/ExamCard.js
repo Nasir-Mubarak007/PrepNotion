@@ -26,5 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 4,
     borderRadius: 5,
+    margin: 5,
+    // marginLeft: 0,
   },
 });
