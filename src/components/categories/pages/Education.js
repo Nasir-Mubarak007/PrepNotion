@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Appbar } from "react-native-paper";
+import { Appbar, Searchbar } from "react-native-paper";
 
 import SelectBar from "../../ui/SelectBar";
 import Input from "../../Input";
@@ -35,19 +35,12 @@ const Education = ({ navigation }) => {
     }
   }
   return (
-    <View>
-      {/* <Appbar.Header style={styles.Header}>
-        <Appbar.BackAction
-          style={{ borderRadius: 5, borderWidth: 1, width: 30, height: 30 }}
-          onPress={() => {
-            navigation.goBack();
-          }}
+    <View style={{ marginTop: 20, flex: 1 }}>
+      <View style={{ marginHorizontal: 10 }}>
+        <Searchbar
+          placeholder="Search for any Exam"
+          style={{ height: 48, alignItems: "center", borderRadius: 5 }}
         />
-        <Appbar.Content title={"Education"} />
-      </Appbar.Header> */}
-
-      <View style={{ marginHorizontal: 6 }}>
-        <Input placeholder="Search for any Exam" value="" />
       </View>
 
       <View style={{ marginTop: 9, marginHorizontal: 9 }}>
