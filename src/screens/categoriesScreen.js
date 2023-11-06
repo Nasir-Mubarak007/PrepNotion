@@ -63,7 +63,8 @@ const Categories = ({ navigation }) => {
           )}
           contentContainerStyle={{
             gap: 10,
-            marginTop: 20,
+            marginTop: 5,
+            marginBottom: 70,
           }}
           showsVerticalScrollIndicator={false}
         />

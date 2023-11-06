@@ -47,6 +47,10 @@ const Info = ({ navigation }) => {
     setVisible(false);
     setShow(false);
   }
+  function handleReturn() {
+    setVisible(false);
+    setEditting(false);
+  }
 
   function handleSave(params) {
     setVisible(true);
@@ -167,7 +171,7 @@ const Info = ({ navigation }) => {
             </Button>
           </Dialog.Actions>
         </Dialog>
-        <Notice onCancel={cancel} visible={show} />
+        <Notice onCancel={handleReturn} visible={show} />
       </Portal>
     </View>
   );

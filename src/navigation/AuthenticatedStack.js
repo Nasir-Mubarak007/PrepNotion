@@ -26,6 +26,7 @@ import Increase from "../components/profile/Increase";
 import BuyPoints from "../components/profile/BuyPoints";
 import Security from "../components/profile/Security";
 import ChangePassword from "../components/profile/ChangePassword";
+import ExamsMode from "../components/Exams/ExamsMode";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -152,7 +153,16 @@ const AuthenticatedStack = () => {
         options={{ title: "Study Mode" }}
       />
       <Stack.Screen name="UI/UX" component={Uiux} />
-      <Stack.Screen name="JAMB" component={Jamb} />
+      <Stack.Screen
+        name="JAMB"
+        component={Jamb}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="examsMode"
+        component={ExamsMode}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="NABTEB" component={Nabteb} />
       <Stack.Screen name="WAEC" component={Waec} />
       <Stack.Screen name="NECO" component={Neco} />
