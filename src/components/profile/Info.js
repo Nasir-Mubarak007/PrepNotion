@@ -48,7 +48,7 @@ const Info = ({ navigation }) => {
     setShow(false);
   }
   function handleReturn() {
-    setVisible(false);
+    setShow(false);
     setEditting(false);
   }
 

@@ -9,8 +9,12 @@ import Button from "../ui/Button";
 import IconButton from "../ui/IconButton";
 import FlatButton from "../ui/FlatButton";
 import OutlinedBtn from "../ui/OutlinedBtn";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../firebase";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_AUTH2 } from "../../firebase";
 
 const SigupSchema = Yup.object({
   username: Yup.string()
@@ -26,8 +30,11 @@ const SigupSchema = Yup.object({
     .min(7, "Password must be atleast 7 characters"),
 });
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const auth = FIREBASE_AUTH;
+  const Auth = FIREBASE_AUTH2;
+
+  const googleProvider = new GoogleAuthProvider();
 
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
@@ -36,6 +43,18 @@ const LoginForm = () => {
   function showHandler() {
     visible ? setVisible(false) : setVisible(true);
   }
+
+  const signUpWithGoogle = () => {
+    signInWithPopup(Auth, googleProvider)
+      .then((response) => {
+        alert("SignUp Successful");
+        console.log(response.user);
+      })
+      .catch((error) => {
+        // alert(error.message);
+        console.log(error.message);
+      });
+  };
   return (
     <Formik
       initialValues={{
@@ -179,7 +198,7 @@ const LoginForm = () => {
                 color={"yellow"}
                 icon={"globe-sharp"}
                 size={22}
-                onPress={() => {}}
+                onPress={signUpWithGoogle}
               >
                 Continue with Google
               </OutlinedBtn>
@@ -207,7 +226,7 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
 
 const styles = StyleSheet.create({
   btn: {

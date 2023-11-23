@@ -22,8 +22,10 @@ const Subjects = [
   "Animal Husbandry",
 ];
 
+const selected = [];
+
 const CheckBox = ({ item }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(null);
   return (
     <View
       style={{
@@ -32,16 +34,22 @@ const CheckBox = ({ item }) => {
         backgroundColor: "#D7C8C21A",
       }}
     >
-      <Checkbox.Item
+      <RadioButton.Item
         label={item}
         status={value === item ? "checked" : "unchecked"}
-        onPress={() => setValue(item)}
+        onPress={() => {
+          setValue(item);
+          selected.push(item);
+          console.log(selected);
+        }}
       />
     </View>
   );
 };
 
 const ExamsMode = ({ navigation, route }) => {
+  const title = route.params.title;
+
   return (
     <View style={{ gap: 20, flex: 1 }}>
       <ExamModeHeader navigation={navigation} route={route} />
@@ -57,7 +65,7 @@ const ExamsMode = ({ navigation, route }) => {
         <FlatList
           data={Subjects}
           renderItem={({ item }) => <CheckBox item={item} />}
-          contentContainerStyle={{ gap: 15 }}
+          contentContainerStyle={{ gap: 15, paddingBottom: 357 }}
           showsVerticalScrollIndicator={false}
         />
       </View>
@@ -65,18 +73,17 @@ const ExamsMode = ({ navigation, route }) => {
         style={{
           position: "absolute",
           marginHorizontal: 16,
-          bottom: "16%",
+          bottom: "8%",
           // height: 44,
           width: "92%",
           backgroundColor: "black",
         }}
         color="white"
         label="Proceed"
+        onPress={() => navigation.navigate("startExam", { selected, title })}
       >
-        Howdy
+        Proceed
       </FAB>
-
-      <Text>ExamsMode</Text>
     </View>
   );
 };

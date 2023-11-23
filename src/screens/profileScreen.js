@@ -74,7 +74,7 @@ const ProfileScreen = ({ navigation }) => {
             setClaimed(true);
             setTimeout(() => {
               setClaimed(false);
-            }, 1000 * 60 * 3);
+            }, 1000 * 60 * 25);
           }}
           style={{ backgroundColor: claimed ? "#BABABA" : "black" }}
         >
@@ -95,28 +95,11 @@ const ProfileScreen = ({ navigation }) => {
         contentContainerStyle={{
           gap: 10,
           paddingVertical: 5,
+          marginTop: 50,
         }}
       />
 
-      {/* <Card.Title
-        title="Points claimed for today"
-        subtitle="Card Subtitle"
-        left={(props) => (
-          <Avatar.Icon
-            {...props}
-            color="blue"
-            icon="account-box-outline"
-            theme={{ colors: { primary: "lightblue" } }}
-          />
-        )} */}
-      {/* // right={(props) => (
-        //   <Card.Actions>
-        //     <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
-        //   </Card.Actions>
-        // )}
-      /> */}
-
-      <View style={{ paddingHorizontal: 16, marginTop: 4 }}>
+      <View style={{ paddingHorizontal: 16 }}>
         <Button
           mode="outlined"
           style={{
@@ -151,7 +134,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    gap: 74,
+    gap: 24,
   },
   Header: {
     paddingHorizontal: 20,

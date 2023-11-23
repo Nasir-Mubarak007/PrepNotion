@@ -27,6 +27,7 @@ export const FIREBASE_APP = initializeApp(firebaseConfig);
 export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
-export const FIRESTORE_DB = getFirestore(FIREBASE_APP);
+export const FIREBASE_AUTH2 = getAuth(FIREBASE_APP);
+export const DB = getFirestore(FIREBASE_APP);
 
 // const analytics = getAnalytics(app);

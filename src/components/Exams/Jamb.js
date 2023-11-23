@@ -129,13 +129,13 @@ const Jamb = ({ navigation }) => {
         </View>
 
         {/* <List.Section title="Accordions"> */}
-        <List.Accordion
+        {/* <List.Accordion
           title="Uncontrolled Accordion"
           left={(props) => <List.Icon {...props} icon="folder" />}
         >
           <List.Item title="First item" />
           <List.Item title="Second item" />
-        </List.Accordion>
+        </List.Accordion> */}
 
         {/* <List.Accordion
           title="Controlled Accordion"

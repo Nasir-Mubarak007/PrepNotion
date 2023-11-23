@@ -4,8 +4,7 @@ import { getHeaderTitle } from "@react-navigation/elements";
 import { Appbar, Avatar, Card, IconButton, Text } from "react-native-paper";
 import { Image } from "react-native";
 
-const ExamHeader = ({ navigation, options, title, subtitle }) => {
-  //   const title = getHeaderTitle(options);
+const ExamHeader = ({ navigation, title, subtitle }) => {
   return (
     <View style={styles.Header}>
       <Appbar.BackAction
