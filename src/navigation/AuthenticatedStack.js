@@ -28,6 +28,7 @@ import Security from "../components/profile/Security";
 import ChangePassword from "../components/profile/ChangePassword";
 import ExamsMode from "../components/Exams/ExamsMode";
 import ExamsMode2 from "../components/Exams/ExamsMode2";
+import Questions from "../components/Exams/Question";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -169,17 +170,33 @@ const AuthenticatedStack = () => {
         component={ExamsMode2}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="question"
+        component={Questions}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="NABTEB" component={Nabteb} />
-      <Stack.Screen name="WAEC" component={Waec} />
-      <Stack.Screen name="NECO" component={Neco} />
+      <Stack.Screen
+        name="NABTEB"
+        component={Nabteb}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="WAEC"
+        component={Waec}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NECO"
+        component={Neco}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="info"
         component={Info}
         options={{
           title: "My Information",
           headerShown: false,
-          // header: (props) => <InfoHeader {...props} />,
         }}
       />
 

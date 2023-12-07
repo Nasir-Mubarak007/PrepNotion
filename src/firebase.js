@@ -31,3 +31,5 @@ export const FIREBASE_AUTH2 = getAuth(FIREBASE_APP);
 export const DB = getFirestore(FIREBASE_APP);
 
 // const analytics = getAnalytics(app);
+
+// ANDROID: 424965898810-5cclorm2m955enc51951816b1ftaqspg.apps.googleusercontent.com

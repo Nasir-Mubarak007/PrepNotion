@@ -42,6 +42,7 @@ const Jamb = ({ navigation }) => {
         title={"JAMB"}
         subtitle={"Start your learning journey from here"}
         navigation={navigation}
+        image={"../assets/images/bigJamb.png"}
       />
 
       <View style={{ marginHorizontal: 10 }}>

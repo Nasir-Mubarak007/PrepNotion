@@ -84,6 +84,7 @@ const Confirmation = ({
 };
 
 const ExamsMode2 = ({ navigation, route }) => {
+  const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
   const [year, setYear] = useState("");
   const [hour, setHour] = useState("");
@@ -123,40 +124,46 @@ const ExamsMode2 = ({ navigation, route }) => {
     []
   );
 
-  const Minutes = [
-    "00",
-    "05",
-    "10",
-    "15",
-    "20",
-    "25",
-    "30",
-    "35",
-    "40",
-    "45",
-    "50",
-    "55",
-  ];
+  const Minutes = useMemo(
+    () => [
+      "00",
+      "05",
+      "10",
+      "15",
+      "20",
+      "25",
+      "30",
+      "35",
+      "40",
+      "45",
+      "50",
+      "55",
+    ],
+    []
+  );
 
-  const Years = [
-    "2003/2004",
-    "2004/2005",
-    "2005/2006",
-    "2007/2008",
-    "2008/2009",
-    "2009/2010",
-    "2010/2011",
-    "2011/2012",
-    "2012/2013",
-    "2013/2014",
-    "2014/2015",
-    "2015/2016",
-    "2016/2017",
-    "2017/2018",
-    "2019/2020",
-    "2020/2021",
-    "2021/2022",
-  ];
+  const Years = useMemo(
+    () => [
+      "2003/2004",
+      "2004/2005",
+      "2005/2006",
+      "2007/2008",
+      "2008/2009",
+      "2009/2010",
+      "2010/2011",
+      "2011/2012",
+      "2012/2013",
+      "2013/2014",
+      "2014/2015",
+      "2015/2016",
+      "2016/2017",
+      "2017/2018",
+      "2019/2020",
+      "2020/2021",
+      "2021/2022",
+    ],
+    []
+  );
 
   const renderItem = useCallback(
     ({ item }) => (
@@ -230,15 +237,16 @@ const ExamsMode2 = ({ navigation, route }) => {
                 }}
               >
                 {selected.map((item: any, index: any) => {
-                  const [value, setValue] = useState(false);
-
                   return (
                     <Chip
                       key={index}
-                      style={styles.chip}
+                      style={[
+                        styles.chip,
+                        { backgroundColor: value ? "lightblue" : "white" },
+                      ]}
                       mode="outlined"
-                      selected={value ? true : false}
-                      onPress={() => setValue(!value)}
+                      // selected={value ? true : false}
+                      onPress={() => setValue(value)}
                     >
                       {item}
                     </Chip>
@@ -257,23 +265,7 @@ const ExamsMode2 = ({ navigation, route }) => {
                 onPress={openSheet}
                 style={styles.drop}
               >
-                {/* <ScrollView
-                style={{ height: 40, backgroundColor: "white" }}
-                // showsVerticalScrollIndicator={false}
-              >
-                <List.Item title="1" onPress={() => setHour("1")} />
-                <List.Item title="2" onPress={() => setHour("2")} />
-                <List.Item title="3" onPress={() => setHour("3")} />
-                <List.Item title="4" onPress={() => setHour("4")} />
-                <List.Item title="5" onPress={() => setHour("5")} />
-                <List.Item title="6" onPress={() => setHour("6")} />
-                <List.Item title="7" onPress={() => setHour("7")} />
-                <List.Item title="8" onPress={() => setHour("8")} />
-                <List.Item title="9" onPress={() => setHour("9")} />
-                <List.Item title="10" onPress={() => setHour("10")} />
-                <List.Item title="11" onPress={() => setHour("11")} />
-                <List.Item title="12" onPress={() => setHour("12")} />
-              </ScrollView> */}
+                {/*  */}
               </List.Accordion>
 
               <List.Accordion
@@ -281,23 +273,7 @@ const ExamsMode2 = ({ navigation, route }) => {
                 style={styles.drop}
                 onPress={openSheet2}
               >
-                {/* <ScrollView
-                  style={{ height: 40, backgroundColor: "white" }}
-                  // showsVerticalScrollIndicator={false}
-                >
-                  <List.Item title="00" onPress={() => setMin("00")} />
-                  <List.Item title="05" onPress={() => setMin("05")} />
-                  <List.Item title="10" onPress={() => setMin("10")} />
-                  <List.Item title="15" onPress={() => setMin("15")} />
-                  <List.Item title="20" onPress={() => setMin("20")} />
-                  <List.Item title="25" onPress={() => setMin("25")} />
-                  <List.Item title="30" onPress={() => setMin("30")} />
-                  <List.Item title="35" onPress={() => setMin("35")} />
-                  <List.Item title="40" onPress={() => setMin("40")} />
-                  <List.Item title="45" onPress={() => setMin("45")} />
-                  <List.Item title="50" onPress={() => setMin("50")} />
-                  <List.Item title="55" onPress={() => setMin("55")} />
-                </ScrollView> */}
+                {/*  */}
               </List.Accordion>
             </View>
           </View>
@@ -310,28 +286,7 @@ const ExamsMode2 = ({ navigation, route }) => {
               onPress={openSheet3}
               style={{ borderWidth: 1, borderRadius: 5 }}
             >
-              {/* <ScrollView style={{ height: 40, backgroundColor: "white" }}>
-                <List.Item
-                  title="2003/2004"
-                  onPress={() => setYear("2003/2004")}
-                />
-                <List.Item
-                  title="2002/2003"
-                  onPress={() => setYear("2002/2003")}
-                />
-                <List.Item
-                  title="2005/2006"
-                  onPress={() => setYear("2005/2006")}
-                />
-                <List.Item
-                  title="2007/2008"
-                  onPress={() => setYear("2007/2008")}
-                />
-                <List.Item
-                  title="2009/2010"
-                  onPress={() => setYear("2009/2010")}
-                />
-              </ScrollView> */}
+              {/*  */}
             </List.Accordion>
           </View>
 
@@ -346,15 +301,16 @@ const ExamsMode2 = ({ navigation, route }) => {
           </View>
         </View>
         <Confirmation
-          onStart={() =>
-            navigation.navigate("", {
+          onStart={() => {
+            navigation.navigate("question", {
               hour: hour,
               min: min,
               year: year,
               data: selected,
               title: title + " " + year,
-            })
-          }
+            }),
+              handleCancel();
+          }}
           onCancel={handleCancel}
           visible={visible}
           hour={hour}
@@ -393,7 +349,6 @@ const styles = StyleSheet.create({
   chip: {
     minWidth: 38,
     height: 40,
-
     justifyContent: "center",
   },
   subjects: {
