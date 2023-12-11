@@ -22,13 +22,15 @@ import Nabteb from "../components/Exams/Nabteb";
 import Waec from "../components/Exams/Waec";
 import Neco from "../components/Exams/Neco";
 import Info from "../components/profile/Info";
+import Courses from "../components/Courses";
 import Increase from "../components/profile/Increase";
 import BuyPoints from "../components/profile/BuyPoints";
 import Security from "../components/profile/Security";
 import ChangePassword from "../components/profile/ChangePassword";
-import ExamsMode from "../components/Exams/ExamsMode";
-import ExamsMode2 from "../components/Exams/ExamsMode2";
-import Questions from "../components/Exams/Question";
+import ExamsMode from "../components/Exams/ExamMode/ExamsMode";
+import StudyMode2 from "../components/Exams/StudyMode/StudyMode";
+import ExamsMode2 from "../components/Exams/ExamMode/ExamsMode2";
+import Questions from "../components/Exams/ExamMode/Question";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -163,6 +165,16 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="examsMode"
         component={ExamsMode}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="studyMode"
+        component={StudyMode2}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Courses"
+        component={Courses}
         options={{ headerShown: false }}
       />
       <Stack.Screen

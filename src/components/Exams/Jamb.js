@@ -30,7 +30,7 @@ const Jamb = ({ navigation }) => {
         navigation.navigate("examsMode", { title: "JAMB" });
         break;
       case "study":
-        return navigation.navigate("StudyMode");
+        return navigation.navigate("studyMode",{ title: "JAMB" });
         break;
       default:
         alert("not handled");
@@ -112,7 +112,7 @@ const Jamb = ({ navigation }) => {
         >
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Subjects</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Courses", { title: "JAMB" })}>
               <Text style={styles.seeAll}>See All</Text>
             </TouchableOpacity>
           </View>

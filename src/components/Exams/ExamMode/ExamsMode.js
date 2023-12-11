@@ -1,6 +1,6 @@
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import ExamModeHeader from "../ExamModeHeader";
+import ExamModeHeader from "../../ExamModeHeader";
 import { Checkbox, FAB, RadioButton, Searchbar } from "react-native-paper";
 import { useState } from "react";
 

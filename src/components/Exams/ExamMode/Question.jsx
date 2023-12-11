@@ -9,13 +9,13 @@ import {
 import React, { useState } from "react";
 import { Chip, Button, Portal, Dialog } from "react-native-paper";
 
-import QuestionHeader from "../questionHeader";
-import IconButton from "../ui/IconButton";
-import { Colors } from "../../constants/Colors";
-import QuestionType_1 from "./QuestionTypes/type1";
-import QuestionType_2 from "./QuestionTypes/type2";
-import QuestionType_3 from "./QuestionTypes/type3";
-import QuestionType_4 from "./QuestionTypes/type4";
+import QuestionHeader from "../../questionHeader";
+import IconButton from "../../ui/IconButton";
+import { Colors } from "../../../constants/Colors";
+import QuestionType_1 from "../QuestionTypes/type1";
+import QuestionType_2 from "../QuestionTypes/type2";
+import QuestionType_3 from "../QuestionTypes/type3";
+import QuestionType_4 from "../QuestionTypes/type4";
 
 const options = [
   "A.  maximus prime",

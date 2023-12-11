@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState, useMemo, useRef, useCallback } from "react";
-import ExamModeHeader from "../ExamModeHeader";
+import ExamModeHeader from "../../ExamModeHeader";
 // import { FlatList } from "react-native";
 import { Button, Chip, Dialog, List, Portal } from "react-native-paper";
 import BottomSheet from "@gorhom/bottom-sheet";
-import BottomSheets from "../BottomSheets";
+import BottomSheets from "../../BottomSheets";
 
 // type navigation= any;
 
@@ -260,12 +260,18 @@ const ExamsMode2 = ({ navigation, route }) => {
             <Text style={styles.title}>Duration</Text>
 
             <View style={{ flexDirection: "row", gap: 32 }}>
+
+              {/* <TouchableOpacity style={styles.drop}>
+                <Text>{hour ? hour : "H"}</Text>
+                <Text></Text>
+              </TouchableOpacity> */}
+
               <List.Accordion
                 title={hour ? hour : "H"}
                 onPress={openSheet}
                 style={styles.drop}
               >
-                {/*  */}
+                
               </List.Accordion>
 
               <List.Accordion
@@ -273,7 +279,7 @@ const ExamsMode2 = ({ navigation, route }) => {
                 style={styles.drop}
                 onPress={openSheet2}
               >
-                {/*  */}
+                
               </List.Accordion>
             </View>
           </View>
@@ -286,7 +292,7 @@ const ExamsMode2 = ({ navigation, route }) => {
               onPress={openSheet3}
               style={{ borderWidth: 1, borderRadius: 5 }}
             >
-              {/*  */}
+              
             </List.Accordion>
           </View>
 
