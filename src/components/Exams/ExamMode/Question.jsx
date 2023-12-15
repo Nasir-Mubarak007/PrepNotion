@@ -16,13 +16,31 @@ import QuestionType_1 from "../QuestionTypes/type1";
 import QuestionType_2 from "../QuestionTypes/type2";
 import QuestionType_3 from "../QuestionTypes/type3";
 import QuestionType_4 from "../QuestionTypes/type4";
+import QuestionType_5 from "../QuestionTypes/type5";
 
-const options = [
-  "A.  maximus prime",
-  "B.  Optimus Prime",
-  "C.  Diablo Noir",
-  "D.  Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, nihil ipsa corrupti aut cupiditate ",
-];
+import { Questions } from "../../../constants/Questions";
+const options = Questions;
+
+const typeOne = options.examType === "multipleOptions";
+const type2= options.examType ==='multipleChoice'
+const type3= options.examType ===''
+const qusetionType = {
+  if(typeOne) {
+    return <QuestionType_2 options={options} />;
+  },
+
+  if (type2) {
+    return <QuestionType_5 options={options} />
+  }
+
+  // if(type3){}
+};
+// const options=[
+//   'Albert',
+//   'chloe',
+//   'skoe',
+//   'Granvile'
+// ]
 
 const Confirmation = ({ visible, onCancel, onStart }) => {
   return (
@@ -85,7 +103,7 @@ const Chips = ({ item, value, setValue }) => {
   );
 };
 
-const Questions = ({ navigation, route }) => {
+const Questionz = ({ navigation, route }) => {
   const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -111,6 +129,8 @@ const Questions = ({ navigation, route }) => {
         navigation={navigation}
         title={title}
         onTap={submitHandler}
+        onCancel={handleCancel}
+        visible={visible}
       />
       <View style={{ gap: 9, marginLeft: 16 }}>
         <Text style={styles.coloredTitle}>
@@ -142,15 +162,36 @@ const Questions = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ height: "46%" }}>
+      <View style={{ height: "40%" }}>
+        {/* <FlatList
+          data={options}
+          renderItem={(options) => {
+           return (<QuestionType_1
+              questions={options.question}
+              options={options.option}
+            />)
+          }}
+          keyExtractor={(i) => i.id}
+        /> */}
+
         <ScrollView
           contentContainerStyle={{ paddingBottom: 30, gap: 9 }}
           showsVerticalScrollIndicator={false}
         >
-          <QuestionType_1 options={options} />
-          <QuestionType_2 options={options} />
-          <QuestionType_3 options={options} />
-          <QuestionType_4 options={options} />
+          {options.map((data) => {
+            return (
+              <QuestionType_1
+                key={data.id}
+                optionz={data}
+              />
+             );
+          })} 
+
+          {/* <QuestionType_1 options={options} /> */}
+          {/* <QuestionType_2 options={options} />
+           <QuestionType_3 options={options} />
+           <QuestionType_4 options={options} /> */}
+          {/* <QuestionType_5 options={options} /> */}
         </ScrollView>
       </View>
 
@@ -210,20 +251,11 @@ const Questions = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-
-      <Confirmation
-        visible={visible}
-        onCancel={handleCancel}
-        onStart={() => {
-          navigation.navigate("");
-          handleCancel();
-        }}
-      />
     </View>
   );
 };
 
-export default Questions;
+export default Questionz;
 
 const styles = StyleSheet.create({
   chip: {

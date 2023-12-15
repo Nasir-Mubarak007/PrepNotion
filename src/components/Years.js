@@ -6,7 +6,7 @@ import { useState } from "react";
 import CoursesHeader from "./CoursesHeader";
 import SelectBar from './ui/SelectBar'
 
-const Years = [
+const Year = [
     {name:'2002/2003',value:'2002/2003'},
     {name:'2003/2004',value:'2003/2004'},
     {name:'2004/2005',value:'2004/2005'},
@@ -27,15 +27,13 @@ const Years = [
     {name:"2019/2020",value:"2019/2020",},
     {name:"2020/2021",value:"2020/2021",},
     {name:"2021/2022",value:"2021/2022",},
-
-    
   ];
 
-const selected = [];
 
 
 
-const Courses = ({ navigation}) => {
+
+const Years = ({ navigation}) => {
 
     function handleTap(exam) {
         switch (exam) {
@@ -60,8 +58,8 @@ const Courses = ({ navigation}) => {
       }
 
   return (
-    <View style={{ gap: 20, flex: 1 }}>
-      <CoursesHeader navigation={navigation} route={route} />
+    <View style={{ marginTop:20, gap: 20, flex: 1 }}>
+      {/* <CoursesHeader navigation={navigation} route={route} /> */}
       <View style={{ marginHorizontal: 16 }}>
         <Searchbar
           placeholder="Search for any Subject"
@@ -72,7 +70,7 @@ const Courses = ({ navigation}) => {
         <Text style={styles.title}>Subjects</Text>
 
         <FlatList
-          data={Years}
+          data={Year}
           renderItem={({ item }) => <SelectBar item={item.name} onTap={() => handleTap(item.value)} />}
           contentContainerStyle={{ gap: 15, paddingBottom: 357 }}
           showsVerticalScrollIndicator={false}
@@ -83,7 +81,7 @@ const Courses = ({ navigation}) => {
   );
 };
 
-export default Courses;
+export default Years;
 
 const styles = StyleSheet.create({
     title:{

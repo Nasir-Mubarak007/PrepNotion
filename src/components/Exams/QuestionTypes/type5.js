@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import { Button } from "react-native-paper";
+import { Button, Checkbox } from "react-native-paper";
 import { Colors } from "../../../constants/Colors";
 import IconButton from "../../ui/IconButton";
 
@@ -14,6 +14,7 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
           paddingHorizontal: 12,
           minHeight: 45,
           justifyContent: "center",
+
           maxHeight: 300,
           borderRadius: 4,
           backgroundColor: "white",
@@ -26,25 +27,41 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
         onTap();
       }}
     >
-      <Text style={styles.icon}>{'A. '+ item.option.a}</Text>
-      <Text style={styles.icon}>{'B. '+ item.option.b}</Text>
-      <Text style={styles.icon}>{'C. '+ item.option.c}</Text>
-      <Text style={styles.icon}>{'D. '+ item.option.d}</Text>
+      <Text style={styles.icon}> {"A. " + item.option.a}</Text>
+      <Text style={styles.icon}> {"B." + item.option.b}</Text>
     </TouchableOpacity>
   );
 };
 
-const QuestionType_2 = ({ options }) => {
+const QuestionType_5 = ({ options }) => {
   return (
     <View style={styles.questionContainer}>
+      <Button
+        style={{
+          width: 220,
+          backgroundColor: "#4F525433",
+          borderRadius: 5,
+          height: 35,
+          justifyContent: "center",
+          marginBottom: 6,
+        }}
+        onPress={() => {}}
+      >
+        <Text style={{ color: "black" }}>View Illustration</Text>
+      </Button>
+
       <View style={{ position: "absolute", right: 15, top: 10 }}>
         <IconButton icon={"volume-high-sharp"} size={24} onPress={() => {}} />
       </View>
-      <View style={{ justifyContent: "center", marginTop: 50 }}>
-        <Text style={{ textAlign: "center", fontSize: 16 }}>
-          {options.question}
-        </Text>
-      </View>
+      {options.map((data) => {
+        return (
+          <View style={{ justifyContent: "center" }}>
+            <Text style={{ textAlign: "center", fontSize: 16 }}>
+              {data.question}
+            </Text>
+          </View>
+        );
+      })}
 
       <View style={{ marginTop: 20, gap: 16 }}>
         {options.map((data) => {
@@ -64,7 +81,7 @@ const QuestionType_2 = ({ options }) => {
   );
 };
 
-export default QuestionType_2;
+export default QuestionType_5;
 
 const styles = StyleSheet.create({
   questionContainer: {

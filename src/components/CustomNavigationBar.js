@@ -7,7 +7,6 @@ const CustomNavigationBar = ({
   route,
   options,
   back,
-  subTitle,
   style,
 }) => {
   const title = getHeaderTitle(options, route.name);
@@ -21,7 +20,7 @@ const CustomNavigationBar = ({
         />
       ) : null}
       <Appbar.Content title={title} />
-      {back ? null : <Text>{subTitle}</Text>}
+      
     </Appbar.Header>
   );
 };

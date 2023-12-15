@@ -30,7 +30,8 @@ import ChangePassword from "../components/profile/ChangePassword";
 import ExamsMode from "../components/Exams/ExamMode/ExamsMode";
 import StudyMode2 from "../components/Exams/StudyMode/StudyMode";
 import ExamsMode2 from "../components/Exams/ExamMode/ExamsMode2";
-import Questions from "../components/Exams/ExamMode/Question";
+import Questionz from "../components/Exams/ExamMode/Question";
+import Years from "../components/Years";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -178,13 +179,20 @@ const AuthenticatedStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="years"
+        component={Years}
+        options={{
+          header: (props) => <CustomNavigationBar {...props} />,
+        }}
+      />
+      <Stack.Screen
         name="startExam"
         component={ExamsMode2}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="question"
-        component={Questions}
+        component={Questionz}
         options={{ headerShown: false }}
       />
 

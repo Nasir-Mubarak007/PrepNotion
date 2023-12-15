@@ -1,10 +1,57 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import { getHeaderTitle } from "@react-navigation/elements";
-import { Appbar, Button, Text } from "react-native-paper";
+import { Appbar, Button, Text, Portal, Dialog} from "react-native-paper";
 import { Image } from "react-native";
+import { Colors } from "../constants/Colors";
 
-const ExamHeader = ({ navigation, title }) => {
+// import { Colors } from "./constants/Colors";
+
+
+const Confirmation = ({ visible, onCancel, onStart }) => {
+  return (
+    <Portal>
+      <Dialog visible={visible} onDismiss={onCancel}>
+        <Dialog.Title style={{ textAlign: "center" }}>
+          Confirm Submission
+        </Dialog.Title>
+        <Dialog.Content>
+          <View style={{ gap: 20 }}>
+            <Text style={styles.title}>Are you sure you want to submit?</Text>
+          </View>
+        </Dialog.Content>
+        <Dialog.Actions style={{ justifyContent: "center", gap: 23 }}>
+          <Button
+            onPress={onCancel}
+            style={{
+              height: 38,
+              width: 82,
+              borderRadius: 5,
+            }}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            mode="contained"
+            onPress={onStart}
+            style={{
+              height: 38,
+              width: 82,
+              borderRadius: 5,
+              backgroundColor: Colors.Primary,
+            }}
+          >
+            Submit
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  );
+};
+
+const ExamHeader = ({ navigation, title, visible, onTap, onCancel,  }) => {
+  
   return (
     <View style={styles.Header}>
       <Appbar.BackAction
@@ -20,9 +67,19 @@ const ExamHeader = ({ navigation, title }) => {
 
       <View style={styles.title}>
         <Text variant="titleLarge">{title}</Text>
+      <Button style={styles.btn} onPress={onTap}>Submit</Button>
       </View>
-      <Button style={styles.btn}>Submit</Button>
+
+      <Confirmation
+        visible={visible}
+        onCancel={onCancel}
+        onStart={() => {
+          navigation.navigate("");
+          onCancel();
+        }}
+      />
     </View>
+    
   );
 };
 
@@ -42,7 +99,7 @@ const styles = StyleSheet.create({
     paddingTop: 48,
     gap: 20,
     justifyContent: "center",
-    maxHeight: 200,
+    maxHeight: 220,
   },
   btn: {
     width: 82,
@@ -56,5 +113,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:'space-between'
   },
 });

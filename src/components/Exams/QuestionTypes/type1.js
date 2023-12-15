@@ -4,9 +4,10 @@ import { Button } from "react-native-paper";
 import { Colors } from "../../../constants/Colors";
 import IconButton from "../../ui/IconButton";
 
-const Option = ({ item, chosen, setChosen, onTap }) => {
-  return (
-    <TouchableOpacity
+const Option = ({ optionz, chosen, setChosen, onTap }) => {
+  // optionz.map((data,index) => {
+  //   return (
+      <TouchableOpacity
       // key={index}
       style={[
         {
@@ -27,12 +28,45 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
         onTap();
       }}
     >
-      <Text style={styles.icon}>{item}</Text>
+      <Text style={styles.icon}> {optionz.option}</Text>
+      
     </TouchableOpacity>
-  );
+
+  //   );
+  // })
+  // return (
+  //   <TouchableOpacity
+  //     // key={index}
+  //     style={[
+  //       {
+  //         padding: 8,
+  //         paddingHorizontal: 12,
+  //         minHeight: 45,
+  //         justifyContent: "center",
+
+  //         maxHeight: 300,
+  //         borderRadius: 4,
+  //         backgroundColor: "white",
+  //         // width: "100%",
+  //       },
+  //       { backgroundColor: chosen ? Colors.Primary200 : "white" },
+  //     ]}
+  //     onPress={() => {
+  //       setChosen(!chosen);
+  //       onTap();
+  //     }}
+  //   >
+  //     <Text style={styles.icon}> {`${optionz.option.key} ${optionz.option.value}`}</Text>
+      
+  //   </TouchableOpacity>
+  // );
 };
 
-const QuestionType_1 = ({ options }) => {
+const QuestionType_1 = ({ optionz }) => {
+  const [chosen, setChosen] = useState(false);
+
+  console.log(optionz.question);
+  console.log(optionz.option);
   return (
     <View style={styles.questionContainer}>
       <Button
@@ -53,25 +87,18 @@ const QuestionType_1 = ({ options }) => {
         <IconButton icon={"volume-high-sharp"} size={24} onPress={() => {}} />
       </View>
       <View style={{ justifyContent: "center" }}>
-        <Text style={{ textAlign: "center", fontSize: 16 }}>
-          What is the major difference between Nigeria and other african
-          coutries and their neighbors
-        </Text>
+        <Text style={{ textAlign: "center", fontSize: 16 }}>{optionz.question}</Text>
       </View>
 
       <View style={{ marginTop: 20, gap: 16 }}>
-        {options.map((data, index) => {
-          const [chosen, setChosen] = useState(false);
-          return (
-            <Option
-              item={data}
-              key={index}
-              chosen={chosen}
-              setChosen={setChosen}
-              onTap={() => {}}
-            />
-          );
-        })}
+      
+        <Option
+          optionz={optionz}
+          // key={optionz.index}
+          chosen={chosen}
+          setChosen={setChosen}
+          onTap={() => {}}
+        />
       </View>
     </View>
   );
