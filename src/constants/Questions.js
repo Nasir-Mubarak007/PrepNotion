@@ -1,14 +1,14 @@
 export const Questions = [
   {
     id: 1,
-    question: " He put________  eggs in a basket.",
+    question: " Choose out of the words below ",
     option: {
       "a": "white dozen eggs ",
       "b": "a dozen white ",
       "c": " a white dozen eggs ",
       "d": "dozen white"
     },
-    passage: "most appropriate option",
+    passage: "most appropriate options",
     image: "",
     answer: "b",
     solution: "",
@@ -56,7 +56,7 @@ export const Questions = [
   },
   {
     id: 4,
-    question: " He put…………..  eggs in a basket.",
+    question: " What is the major difference between Nigeria and other african coutries and their neighbors",
     option: {
       "a": "white dozen eggs ",
       "b": "a dozen white ",
@@ -75,12 +75,12 @@ export const Questions = [
   },
   {
     id: 5,
-    question: " He put…………..  eggs in a basket.",
+    question: " Euglena viridis is ",
     option: {
-      "a": "white dozen eggs ",
-      "b": "a dozen white ",
-      "c": " a white dozen eggs ",
-      "d": "dozen white"
+      "a": "an animal",
+      "b": "a plant ",
+      "c": " I don't know ",
+      "d": "None of the above"
     },
     
     passage: "most appropriate option",
