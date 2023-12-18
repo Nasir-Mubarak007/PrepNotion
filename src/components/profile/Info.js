@@ -1,9 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PaperInput from "../PaperInput";
 import { Avatar, Button, Dialog, Portal } from "react-native-paper";
-import InfoHeader from "../infoHeader";
 import { ErrorMessage } from "formik";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import InfoHeader from "../infoHeader";
+import { askPermission, pickImage } from "../../utils";
 
 const Notice = ({ visible, onCancel, navigation }) => {
   return (
@@ -42,6 +45,15 @@ const Info = ({ navigation }) => {
   const [email, setEmail] = useState(email || "");
 
   const [show, setShow] = useState(false);
+  const [selectedImage, setSelectectedImage] = useState(null);
+  const [permissionStatus, setPermissionStatus] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const status = await askPermission();
+      setPermissionStatus(status);
+    })();
+  }, []);
 
   function cancel() {
     setVisible(false);
@@ -52,13 +64,28 @@ const Info = ({ navigation }) => {
     setEditting(false);
   }
 
-  function handleSave(params) {
+  function handleSave() {
     setVisible(true);
   }
 
   function handleSaved() {
     setVisible(false);
     setShow(true);
+  }
+
+  async function handleProfilePicture() {
+    const result = await pickImage();
+    console.log(result);
+    if (!result.canceled) {
+      setSelectectedImage(result.assets[0]);
+    }
+
+    if (!permissionStatus) {
+      return <Text>Loading...</Text>
+    }
+    if (permissionStatus !== 'granted') {
+      return <Text>PrepNotion needs this permission to work</Text>
+    }
   }
 
   return (
@@ -74,12 +101,23 @@ const Info = ({ navigation }) => {
           marginVertical: 20,
           justifyContent: "center",
           alignItems: "center",
+          borderRadius: 120,
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <Avatar.Image
-          size={60}
-          source={require("../../assets/images/avatar.png")}
-        />
+        {!selectedImage ? (
+          <MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
+        ) : (
+          <Avatar.Image
+            size={60}
+            source={
+              !selectedImage
+                ? require("../../assets/images/avatar.png")
+                : { uri: selectedImage }
+            }
+          />
+        )}
 
         {editting && (
           <TouchableOpacity
@@ -91,6 +129,7 @@ const Info = ({ navigation }) => {
               right: "40%",
               bottom: "2%",
             }}
+            onPress={handleProfilePicture}
           >
             <Avatar.Icon
               size={20}

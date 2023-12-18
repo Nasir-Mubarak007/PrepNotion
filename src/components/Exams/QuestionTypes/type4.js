@@ -65,7 +65,7 @@ const QuestionType_4 = ({ options }) => {
           return (
             <Option
               item={data}
-              key={index}
+              key={data.id}
               chosen={chosen}
               setChosen={setChosen}
               //   onTap={() => {}}

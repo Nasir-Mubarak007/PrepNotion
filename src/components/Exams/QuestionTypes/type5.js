@@ -6,30 +6,55 @@ import IconButton from "../../ui/IconButton";
 
 const Option = ({ item, chosen, setChosen, onTap }) => {
   return (
-    <TouchableOpacity
-      // key={index}
-      style={[
-        {
-          padding: 8,
-          paddingHorizontal: 12,
-          minHeight: 45,
-          justifyContent: "center",
+    <View style={{ gap: 9 }}>
+      <TouchableOpacity
+        // key={index}
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
 
-          maxHeight: 300,
-          borderRadius: 4,
-          backgroundColor: "white",
-          // width: "100%",
-        },
-        { backgroundColor: chosen ? Colors.Primary200 : "white" },
-      ]}
-      onPress={() => {
-        setChosen(!chosen);
-        onTap();
-      }}
-    >
-      <Text style={styles.icon}> {"A. " + item.option.a}</Text>
-      <Text style={styles.icon}> {"B." + item.option.b}</Text>
-    </TouchableOpacity>
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}> {"A. " + item.option.a}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        // key={index}
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
+
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}> {"B." + item.option.b}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

@@ -6,27 +6,97 @@ import IconButton from "../../ui/IconButton";
 
 const Option = ({ item, chosen, setChosen, onTap }) => {
   return (
-    <TouchableOpacity
-      style={[
-        {
-          padding: 8,
-          paddingHorizontal: 12,
-          minHeight: 45,
-          justifyContent: "center",
-          maxHeight: 300,
-          borderRadius: 4,
-          backgroundColor: "white",
-          // width: "100%",
-        },
-        { backgroundColor: chosen ? Colors.Primary200 : "white" },
-      ]}
-      onPress={() => {
-        setChosen(!chosen);
-        onTap();
-      }}
-    >
-      <Text style={styles.icon}>{item}</Text>
-    </TouchableOpacity>
+    <View style={{ gap: 9 }}>
+      <TouchableOpacity
+        // key={index}
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}>{"A. " + item.option.a}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
+
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}>{"B. " + item.option.b}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
+
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}>{"C. " + item.option.c}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          {
+            padding: 8,
+            paddingHorizontal: 12,
+            minHeight: 45,
+            justifyContent: "center",
+
+            maxHeight: 300,
+            borderRadius: 4,
+            backgroundColor: "white",
+            // width: "100%",
+          },
+          { backgroundColor: chosen ? Colors.Primary200 : "white" },
+        ]}
+        onPress={() => {
+          setChosen(!chosen);
+          onTap();
+        }}
+      >
+        <Text style={styles.icon}>{"D. " + item.option.d}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -52,8 +122,7 @@ const QuestionType_3 = ({ options }) => {
       </View>
       <View style={{ justifyContent: "center" }}>
         <Text style={{ textAlign: "center", fontSize: 16 }}>
-          What is the major difference between Nigeria and other african
-          coutries and their neighbors
+          {options.question}
         </Text>
       </View>
 
@@ -63,7 +132,7 @@ const QuestionType_3 = ({ options }) => {
           return (
             <Option
               item={data}
-              key={index}
+              key={data.id}
               chosen={chosen}
               setChosen={setChosen}
               onTap={() => {}}
