@@ -84,7 +84,8 @@ const Info = ({ navigation }) => {
       return <Text>Loading...</Text>
     }
     if (permissionStatus !== 'granted') {
-      return <Text>PrepNotion needs this permission to work</Text>
+      alert("Sorry, PrepNotion need camera roll permissions to make this work!");
+      return
     }
   }
 
@@ -100,24 +101,23 @@ const Info = ({ navigation }) => {
           marginTop: 10,
           marginVertical: 20,
           justifyContent: "center",
+          height:70,
           alignItems: "center",
           borderRadius: 120,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        {/* {!selectedImage ? (
+        {!selectedImage ? (
           <MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
-        ) : ( */}
+        ) : (
           <Avatar.Image
             size={60}
             source={
-              !selectedImage
-                ? require("../../assets/images/avatar.png")
-                : { uri: selectedImage }
+               { uri: selectedImage }
             }
           />
-        {/* )} */}
+         )} 
 
         {editting && (
           <TouchableOpacity

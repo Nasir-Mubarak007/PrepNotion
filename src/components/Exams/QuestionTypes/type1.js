@@ -25,7 +25,7 @@ const Option = ({ optionz, chosen, setChosen, onTap }) => {
   //   ]}
   //   onPress={() => {
   //     setChosen(!chosen);
-  //     onTap();
+      // onTap();
   //   }}
   // >
   //   <Text style={styles.icon}> {"A." + optionz.option.a}</Text>
@@ -125,7 +125,7 @@ const Option = ({ optionz, chosen, setChosen, onTap }) => {
         setChosen(!chosen);
         onTap();
       }}
-    >
+      >
       <Text style={styles.icon}> {"D."+optionz.option.d}</Text>
       
     </TouchableOpacity>
@@ -135,9 +135,9 @@ const Option = ({ optionz, chosen, setChosen, onTap }) => {
 };
 
 const QuestionType_1 = ({ optionz }) => {
-
+  const [chosen, setChosen] = useState(false);
+  
   console.log(optionz.question);
-  console.log(optionz.option);
   return (
     <View style={styles.questionContainer}>
       <Button
@@ -164,18 +164,17 @@ const QuestionType_1 = ({ optionz }) => {
       </View>
 
       <View style={{ marginTop: 20, gap: 16 }}>
-      {optionz.map((data) => {
-          const [chosen, setChosen] = useState(false);
-          return (
+      {/* {optionz.map((data) => {
+      return ( */}
         <Option
-          optionz={data}
-          key={data.id}
+          optionz={optionz}
+          // key={data.id}
           chosen={chosen}
           setChosen={setChosen}
           onTap={() => {}}
         />
-        );
-        })}
+        {/* );
+        })} */}
       </View>
     </View>
   );

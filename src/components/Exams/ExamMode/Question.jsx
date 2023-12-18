@@ -22,8 +22,8 @@ import { Questions } from "../../../constants/Questions";
 const options = Questions;
 
 const typeOne = options.examType === "multipleOptions";
-const type2= options.examType ==='multipleChoice'
-const type3= options.examType ===''
+const type2= options.examType ==='trueOrFalse'
+const type3= options.examType ==='multipleChoice'
 const qusetionType = {
   if(typeOne) {
     return <QuestionType_2 options={options} />;
