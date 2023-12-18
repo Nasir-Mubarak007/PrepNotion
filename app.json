@@ -25,6 +25,14 @@
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "PrepNotion accesses your camera to let you take profile pictures and share them with your friends."
+        }
+      ]
+    ]
   }
 }

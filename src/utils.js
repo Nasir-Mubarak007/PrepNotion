@@ -12,7 +12,7 @@ export async function askPermission() {
   return status;
 }
 
-const imageRef = ref(storage, ``.jpg)
+// const imageRef = ref(storage, ``.jpg)
 
-const snapshot = await uploadBytes(imageRef,{contentType: 'image/jpeg'})
-const url= await getDownloadURL(snapshot.ref)
+// const snapshot = await uploadBytes(imageRef,{contentType: 'image/jpeg'})
+// const url= await getDownloadURL(snapshot.ref)

@@ -77,7 +77,7 @@ const Info = ({ navigation }) => {
     const result = await pickImage();
     console.log(result);
     if (!result.canceled) {
-      setSelectectedImage(result.assets[0]);
+      setSelectectedImage(result.assets.at(0).uri);
     }
 
     if (!permissionStatus) {
@@ -106,9 +106,9 @@ const Info = ({ navigation }) => {
           justifyContent: "center",
         }}
       >
-        {!selectedImage ? (
+        {/* {!selectedImage ? (
           <MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
-        ) : (
+        ) : ( */}
           <Avatar.Image
             size={60}
             source={
@@ -117,7 +117,7 @@ const Info = ({ navigation }) => {
                 : { uri: selectedImage }
             }
           />
-        )}
+        {/* )} */}
 
         {editting && (
           <TouchableOpacity
