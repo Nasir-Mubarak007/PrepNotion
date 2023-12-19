@@ -158,12 +158,12 @@ const AuthenticatedStack = () => {
         component={ExamMode}
         options={{ title: "Exam Mode" }}
       />
-        <Stack.Screen name="UI/UX" component={Uiux} />
-        <Stack.Screen
-          name="JAMB"
-          component={Jamb}
-          options={{ headerShown: false }}
-        />
+      <Stack.Screen name="UI/UX" component={Uiux} />
+      <Stack.Screen
+        name="JAMB"
+        component={Jamb}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Home"
         component={MyTabs}
@@ -184,7 +184,7 @@ const AuthenticatedStack = () => {
         component={StudyMode2}
         options={{ headerShown: false }}
       />
-      
+
       <Stack.Screen
         name="years"
         component={Years}
@@ -227,7 +227,11 @@ const AuthenticatedStack = () => {
         }}
       />
 
-      <Stack.Screen name="results" component={ResultsPage} options={{title:'Results'}}/>
+      <Stack.Screen
+        name="results"
+        component={ResultsPage}
+        options={{ title: "Results", headerShown: false }}
+      />
 
       <Stack.Screen
         name="changePassword"
