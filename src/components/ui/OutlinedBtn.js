@@ -19,7 +19,8 @@ export default OutlinedBtn;
 const styles = StyleSheet.create({
   button: {
     margin: 8,
-    padding: 8,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
     borderRadius: 8,
     borderWidth: 0.5,
     borderColor: "black",
