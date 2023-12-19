@@ -19,19 +19,20 @@ import QuestionType_4 from "../QuestionTypes/type4";
 import QuestionType_5 from "../QuestionTypes/type5";
 
 import { Questions } from "../../../constants/Questions";
+import Timer from "../../Timer";
 const options = Questions;
 
 const typeOne = options.examType === "multipleOptions";
-const type2= options.examType ==='trueOrFalse'
-const type3= options.examType ==='multipleChoice'
+const type2 = options.examType === "trueOrFalse";
+const type3 = options.examType === "multipleChoice";
 const qusetionType = {
   if(typeOne) {
     return <QuestionType_2 options={options} />;
   },
 
-  if (type2) {
-    return <QuestionType_5 options={options} />
-  }
+  if(type2) {
+    return <QuestionType_5 options={options} />;
+  },
 
   // if(type3){}
 };
@@ -132,10 +133,19 @@ const Questionz = ({ navigation, route }) => {
         onCancel={handleCancel}
         visible={visible}
       />
-      <View style={{ gap: 9, marginLeft: 16 }}>
+      <View style={{ gap: 9, marginLeft: 16, justifyContent:'center' }}>
         <Text style={styles.coloredTitle}>
-          Time: {hour}H : {min}Mins
+          Time: <Timer
+          hours={hour}
+          mins={min}
+          next={() => {
+            navigation.navigate("results");
+          }}
+        />
         </Text>
+        
+
+        
 
         <FlatList
           data={subjects}
@@ -179,13 +189,8 @@ const Questionz = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
         >
           {options.map((data) => {
-            return (
-              <QuestionType_1
-                key={data.id}
-                optionz={data}
-              />
-             );
-          })} 
+            return <QuestionType_1 key={data.id} optionz={data} />;
+          })}
 
           {/* <QuestionType_1 options={options} /> */}
           {/* <QuestionType_2 options={options} />
@@ -264,11 +269,13 @@ const styles = StyleSheet.create({
 
     justifyContent: "center",
   },
+
   coloredTitle: {
     color: "#DE6637",
     fontSize: 16,
     fontWeight: "500",
   },
+
   title: {
     fontSize: 16,
     fontWeight: "500",

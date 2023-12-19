@@ -74,7 +74,7 @@ const ExamHeader = ({ navigation, title, visible, onTap, onCancel,  }) => {
         visible={visible}
         onCancel={onCancel}
         onStart={() => {
-          navigation.navigate("");
+          navigation.navigate("results");
           onCancel();
         }}
       />

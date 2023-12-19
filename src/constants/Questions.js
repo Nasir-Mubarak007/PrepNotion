@@ -3,10 +3,10 @@ export const Questions = [
     id: 1,
     question: " Choose out of the words below ",
     option: {
-      "a": "white dozen eggs ",
-      "b": "a dozen white ",
-      "c": " a white dozen eggs ",
-      "d": "dozen white"
+      a: "white dozen eggs ",
+      b: "a dozen white ",
+      c: " a white dozen eggs ",
+      d: "dozen white",
     },
     passage: "most appropriate options",
     image: "",
@@ -21,13 +21,11 @@ export const Questions = [
   {
     id: 2,
     question: " Nigerian flag consists of 2 colours ",
-    option: [
-      { key: "a", value: "true " },
-      { key: "b", value: "false " },
-    ],
+    option: { a: "true ", b: "false " },
+
     passage: "most appropriate option",
     image: "",
-    answer: 'b',
+    answer: "b",
     solution: "",
     examtype: "utme",
     examyear: "2003",
@@ -39,10 +37,10 @@ export const Questions = [
     id: 3,
     question: " He put_____  eggs in a basket.",
     option: {
-      "a": "white dozen eggs ",
-      "b": "a dozen white ",
-      "c": " a white dozen eggs ",
-      "d": "dozen white"
+      a: "white dozen eggs ",
+      b: "a dozen white ",
+      c: " a white dozen eggs ",
+      d: " dozen white",
     },
     passage: "most appropriate option",
     image: "",
@@ -56,12 +54,13 @@ export const Questions = [
   },
   {
     id: 4,
-    question: " What is the major difference between Nigeria and other african coutries and their neighbors",
+    question:
+      " What is the major difference between Nigeria and other african coutries and their neighbors",
     option: {
-      "a": "white dozen eggs ",
-      "b": "a dozen white ",
-      "c": " a white dozen eggs ",
-      "d": "dozen white"
+      a: "white dozen eggs ",
+      b: "a dozen white ",
+      c: " a white dozen eggs ",
+      d: "dozen white",
     },
     passage: "most appropriate option",
     image: "",
@@ -77,12 +76,12 @@ export const Questions = [
     id: 5,
     question: " Euglena viridis is ",
     option: {
-      "a": "an animal",
-      "b": "a plant ",
-      "c": " I don't know ",
-      "d": "None of the above"
+      a: " a plant ",
+      b: " an animal",
+      c: " I don't know ",
+      d: " None of the above",
     },
-    
+
     passage: "most appropriate option",
     image: "",
     answer: "b",

@@ -32,6 +32,7 @@ import StudyMode2 from "../components/Exams/StudyMode/StudyMode";
 import ExamsMode2 from "../components/Exams/ExamMode/ExamsMode2";
 import Questionz from "../components/Exams/ExamMode/Question";
 import Years from "../components/Years";
+import ResultsPage from "../components/ResultsPage";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -136,12 +137,17 @@ const AuthenticatedStack = () => {
       initialRouteName="Home"
     >
       <Stack.Screen
-        name="Home"
-        component={MyTabs}
-        options={{ headerShown: false }}
+        name="buy"
+        component={BuyPoints}
+        options={{ title: "Buy Points" }}
       />
       <Stack.Screen name="Backend" component={Backend} />
       <Stack.Screen name="categories" component={Categories} />
+      <Stack.Screen
+        name="Courses"
+        component={Courses}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="DataAnalyst"
         component={Data}
@@ -152,16 +158,21 @@ const AuthenticatedStack = () => {
         component={ExamMode}
         options={{ title: "Exam Mode" }}
       />
+        <Stack.Screen name="UI/UX" component={Uiux} />
+        <Stack.Screen
+          name="JAMB"
+          component={Jamb}
+          options={{ headerShown: false }}
+        />
+      <Stack.Screen
+        name="Home"
+        component={MyTabs}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="StudyMode"
         component={StudyMode}
         options={{ title: "Study Mode" }}
-      />
-      <Stack.Screen name="UI/UX" component={Uiux} />
-      <Stack.Screen
-        name="JAMB"
-        component={Jamb}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="examsMode"
@@ -173,11 +184,7 @@ const AuthenticatedStack = () => {
         component={StudyMode2}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Courses"
-        component={Courses}
-        options={{ headerShown: false }}
-      />
+      
       <Stack.Screen
         name="years"
         component={Years}
@@ -220,6 +227,8 @@ const AuthenticatedStack = () => {
         }}
       />
 
+      <Stack.Screen name="results" component={ResultsPage} options={{title:'Results'}}/>
+
       <Stack.Screen
         name="changePassword"
         component={ChangePassword}
@@ -234,11 +243,6 @@ const AuthenticatedStack = () => {
         options={{ title: "Database" }}
       />
       <Stack.Screen name="Education" component={Education} />
-      <Stack.Screen
-        name="buy"
-        component={BuyPoints}
-        options={{ title: "Buy Points" }}
-      />
       <Stack.Screen name="Security" component={Security} />
       <Stack.Screen name="Programing" component={Program} />
       <Stack.Screen
