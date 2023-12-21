@@ -2,9 +2,15 @@ import { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FIREBASE_AUTH } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "firebase/auth";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as Google from "expo-auth-session/providers/google";
+
 
 import Input from "../Input";
 import Button from "../ui/Button";
@@ -28,6 +34,18 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
 
   const auth = FIREBASE_AUTH;
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId:
+      "424965898810-5cclorm2m955enc51951816b1ftaqspg.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  }, [response]);
 
   function showHandler() {
     visible ? setVisible(false) : setVisible(true);
@@ -140,7 +158,7 @@ const LoginForm = () => {
                 color={"yellow"}
                 icon={"globe-sharp"}
                 size={22}
-                onPress={() => {}}
+                onPress={() => promptAsync()}
               >
                 Signin with Google
               </OutlinedBtn>

@@ -30,7 +30,7 @@ export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
 });
 export const FIREBASE_AUTH2 = getAuth(FIREBASE_APP);
 export const storage = getStorage(FIREBASE_APP);
-export const DB = getFirestore(FIREBASE_APP);
+export const db = getFirestore(FIREBASE_APP);
 
 // const analytics = getAnalytics(app);
 

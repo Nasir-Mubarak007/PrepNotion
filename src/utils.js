@@ -1,6 +1,10 @@
 import * as imagePicker from "expo-image-picker";
-import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "./firebase";
+import * as Crypto from "expo-crypto";
+
+const UUID = Crypto.randomUUID();
+console.log("Your UUID: " + UUID);
 
 export async function pickImage() {
   let result = imagePicker.launchCameraAsync();
@@ -12,7 +16,32 @@ export async function askPermission() {
   return status;
 }
 
-// const imageRef = ref(storage, ``.jpg)
+export async function uploadImage(uri, path, fName) {
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
 
-// const snapshot = await uploadBytes(imageRef,{contentType: 'image/jpeg'})
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+  // const fileName = fName || UUID
+  const imageRef = ref(storage,`${path}/${fileName}.jpeg`)
+  const snapshot = await uploadBytes(fileRef, blob, { contentType: "image/jpeg" });
+
+  blob.close();
+
+  const url = getDownloadURL(snapshot.ref);
+
+  return { url, fileRef };
+}
+
+// const snapshot = await uploadBytes(imageRef,{})
 // const url= await getDownloadURL(snapshot.ref)

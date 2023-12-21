@@ -139,7 +139,7 @@ const Questionz = ({ navigation, route }) => {
           hours={hour}
           mins={min}
           next={() => {
-            navigation.navigate("results");
+            navigation.navigate("results", {title:title, time: {hour, min}});
           }}
         />
         </Text>

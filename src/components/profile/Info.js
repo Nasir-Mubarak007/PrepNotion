@@ -4,9 +4,13 @@ import PaperInput from "../PaperInput";
 import { Avatar, Button, Dialog, Portal } from "react-native-paper";
 import { ErrorMessage } from "formik";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
+import { FIREBASE_AUTH, db } from "./../../firebase";
 import InfoHeader from "../infoHeader";
-import { askPermission, pickImage } from "../../utils";
+import { askPermission, pickImage, uploadImage } from "../../utils";
+import LoadingOverlay from "../ui/LoadingOverlay";
 
 const Notice = ({ visible, onCancel, navigation }) => {
   return (
@@ -48,6 +52,8 @@ const Info = ({ navigation }) => {
   const [selectedImage, setSelectectedImage] = useState(null);
   const [permissionStatus, setPermissionStatus] = useState();
 
+  const auth = FIREBASE_AUTH;
+
   useEffect(() => {
     (async () => {
       const status = await askPermission();
@@ -68,7 +74,33 @@ const Info = ({ navigation }) => {
     setVisible(true);
   }
 
-  function handleSaved() {
+  async function handleSaved() {
+    const user = auth.currentUser;
+
+    let photoUrl;
+
+    if (selectedImage) {
+      const { url } = await uploadImage(
+        selectedImage,
+        `images/${user.uid}`,
+        "profilePicture"
+      );
+      photoUrl = url;
+    }
+
+    const userData = {
+      displayName,
+      email,
+    };
+
+    if (photoUrl) {
+      userData.photoUrl = photoUrl;
+    }
+
+    await Promise.all([
+      updateProfile(user, userData),
+      setDoc(doc(db, "users", user.uid), {...userData, uid:user.uid}),
+    ]);
     setVisible(false);
     setShow(true);
   }
@@ -77,15 +109,17 @@ const Info = ({ navigation }) => {
     const result = await pickImage();
     console.log(result);
     if (!result.canceled) {
-      setSelectectedImage(result.assets.at(0).uri);
+      setSelectectedImage(result.assets[0].uri);
     }
 
     if (!permissionStatus) {
-      return <Text>Loading...</Text>
+      return <LoadingOverlay />;
     }
-    if (permissionStatus !== 'granted') {
-      alert("Sorry, PrepNotion need camera roll permissions to make this work!");
-      return
+    if (permissionStatus !== "granted") {
+      alert(
+        "Sorry, PrepNotion need camera roll permissions to make this work!"
+      );
+      return;
     }
   }
 
@@ -101,7 +135,7 @@ const Info = ({ navigation }) => {
           marginTop: 10,
           marginVertical: 20,
           justifyContent: "center",
-          height:70,
+          height: 70,
           alignItems: "center",
           borderRadius: 120,
           alignItems: "center",
@@ -111,13 +145,8 @@ const Info = ({ navigation }) => {
         {!selectedImage ? (
           <MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
         ) : (
-          <Avatar.Image
-            size={60}
-            source={
-               { uri: selectedImage }
-            }
-          />
-         )} 
+          <Avatar.Image size={80} source={{ uri: selectedImage }} />
+        )}
 
         {editting && (
           <TouchableOpacity
@@ -126,13 +155,13 @@ const Info = ({ navigation }) => {
               // justifyContent: "center",
               // alignItems: "center",
               position: "absolute",
-              right: "40%",
-              bottom: "2%",
+              right: "38%",
+              bottom: "-9%",
             }}
             onPress={handleProfilePicture}
           >
             <Avatar.Icon
-              size={20}
+              size={30}
               icon="camera"
               style={{
                 backgroundColor: "#009BFF",

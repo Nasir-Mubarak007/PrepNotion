@@ -5,26 +5,38 @@ import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { User, onAuthStateChanged } from "firebase/auth";
+import * as WebBrowser from "expo-web-browser";
 
 import StackNavigator from "./src/navigation/Stack";
 import AuthenticatedStack from "./src/navigation/AuthenticatedStack";
 import { FIREBASE_AUTH } from "./src/firebase";
+import LoadingOverlay from "./src/components/ui/LoadingOverlay";
+
+WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(User || null);
+  const [loading, setLoading]=(true)
 
   useEffect(() => {
-    onAuthStateChanged(
+    const unsubscribe = onAuthStateChanged(
       FIREBASE_AUTH,
       (user) => {
+        setLoading(false)
         console.log("user", user);
         setUser(user);
-      },
-      []
+      }
+      // []
     );
+    return () => unsubscribe();
   }, []);
+
+  if (loading) {
+    return <LoadingOverlay />
+  }
+
   return (
     <PaperProvider>
       <NavigationContainer>

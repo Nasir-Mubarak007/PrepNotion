@@ -230,7 +230,10 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="results"
         component={ResultsPage}
-        options={{ title: "Results", headerShown: false }}
+        options={{
+          title: "Results",
+          // headerShown: false
+        }}
       />
 
       <Stack.Screen

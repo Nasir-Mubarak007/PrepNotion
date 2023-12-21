@@ -54,6 +54,8 @@ const SignUpForm = () => {
         // alert(error.message);
         console.log(error.message);
       });
+
+    
   };
   return (
     <Formik
@@ -71,8 +73,19 @@ const SignUpForm = () => {
             auth,
             email,
             password,
-            username
+            // username
           );
+
+          const userData={
+            email,
+            password,
+            username
+          }
+
+          await Promise.all([
+            response,
+
+          ])
           console.log(response);
           alert("your account is created sucessfully.");
         } catch (error) {
