@@ -26,6 +26,7 @@
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
+    "scheme":"PrepNotion",
     "plugins": [
       [
         "expo-image-picker",

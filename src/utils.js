@@ -4,7 +4,7 @@ import { storage } from "./firebase";
 import * as Crypto from "expo-crypto";
 
 const UUID = Crypto.randomUUID();
-console.log("Your UUID: " + UUID);
+// console.log("Your UUID: " + UUID);
 
 export async function pickImage() {
   let result = imagePicker.launchCameraAsync();
@@ -32,15 +32,15 @@ export async function uploadImage(uri, path, fName) {
     xhr.open("GET", uri, true);
     xhr.send(null);
   });
-  // const fileName = fName || UUID
+  const fileName = fName || UUID
   const imageRef = ref(storage,`${path}/${fileName}.jpeg`)
-  const snapshot = await uploadBytes(fileRef, blob, { contentType: "image/jpeg" });
+  const snapshot = await uploadBytes(imageRef, blob, { contentType: "image/jpeg" });
 
   blob.close();
 
-  const url = getDownloadURL(snapshot.ref);
+  const url = await getDownloadURL(snapshot.ref);
 
-  return { url, fileRef };
+  return { url, fileName };
 }
 
 // const snapshot = await uploadBytes(imageRef,{})

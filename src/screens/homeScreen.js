@@ -17,6 +17,11 @@ import ModeCard from "../components/ModeCard";
 import Input from "../components/Input";
 import PaperInput from "../components/PaperInput";
 
+import { FIREBASE_AUTH } from "../firebase";
+
+const auth = FIREBASE_AUTH;
+const user = auth.currentUser;
+
 const Categories = [
   {
     color: "#EBE3E0",
@@ -80,7 +85,7 @@ export default function Home({ navigation }) {
     <View style={{ gap: 20, flex: 1 }}>
       <View style={styles.Header}>
         <View style={{ maxWidth: "80%" }}>
-          <Text style={{ fontSize: 24, fontWeight: "600" }}>Hello Ibrahim</Text>
+          <Text style={{ fontSize: 24, fontWeight: "600" }}>Hello {user?.displayName||'Ibrahim'}</Text>
 
           <Text style={{ fontSize: 20.5 }}>
             What exam are you preparing for today?
@@ -93,7 +98,7 @@ export default function Home({ navigation }) {
         >
           <Avatar.Image
             size={40}
-            source={require("../assets/images/avatar.png")}
+            source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
           />
         </TouchableOpacity>
       </View>

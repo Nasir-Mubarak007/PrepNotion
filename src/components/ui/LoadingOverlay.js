@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   message: {
-    fontSize: 16,
+    color:'black',
+    fontSize: 18,
     marginBottom: 12,
   },
 });

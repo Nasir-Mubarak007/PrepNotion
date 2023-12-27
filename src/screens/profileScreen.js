@@ -5,6 +5,9 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import ActionCard from "../components/ui/ActionCard";
 import { FIREBASE_AUTH } from "../firebase";
 
+const auth = FIREBASE_AUTH;
+const user = auth.currentUser;
+
 const Actions = [
   {
     icon: "account-box-outline",
@@ -53,9 +56,9 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.heading}>
           <Avatar.Image
             size={30}
-            source={require("../assets/images/avatar.png")}
+            source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
           />
-          <Text style={styles.headText}>Ibrahim</Text>
+          <Text style={styles.headText}>{user.displayName ||'Ibrahim'}</Text>
         </View>
 
         <View>

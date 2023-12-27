@@ -34,6 +34,11 @@ import Questionz from "../components/Exams/ExamMode/Question";
 import Years from "../components/Years";
 import ResultsPage from "../components/ResultsPage";
 
+import { FIREBASE_AUTH } from "../firebase";
+
+const auth = FIREBASE_AUTH;
+const user = auth.currentUser;
+
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -120,7 +125,7 @@ function MyTabs() {
               // />
               <Avatar.Image
                 size={24}
-                source={require("../assets/images/avatar.png")}
+                source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
               />
             );
           },

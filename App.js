@@ -18,13 +18,13 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(User || null);
-  const [loading, setLoading]=(true)
+  // const [loading, setLoading]=(true)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       FIREBASE_AUTH,
       (user) => {
-        setLoading(false)
+        // setLoading(false)
         console.log("user", user);
         setUser(user);
       }
@@ -33,9 +33,9 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <LoadingOverlay />
-  }
+  // if (loading) {
+  //   return <LoadingOverlay />
+  // }
 
   return (
     <PaperProvider>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import {ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -14,7 +14,11 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { FIREBASE_AUTH, FIREBASE_AUTH2 } from "../../firebase";
+import { db, FIREBASE_AUTH, FIREBASE_AUTH2 } from "../../firebase";
+import {  doc, setDoc } from "firebase/firestore";
+
+const auth = FIREBASE_AUTH;
+const user = auth.currentUser;
 
 const SigupSchema = Yup.object({
   username: Yup.string()
@@ -22,16 +26,15 @@ const SigupSchema = Yup.object({
     .required("Username is required"),
   email: Yup.string().email().required("Email is required"),
   password: Yup.string()
-    .required()
+    .required("pasword is required")
     .trim("Cannot be empty")
     .min(7, "Password must be atleast 7 characters"),
   confirmPassword: Yup.string()
-    .required("pasword is required")
+    .required("this field is required")
     .min(7, "Password must be atleast 7 characters"),
 });
 
 const SignUpForm = () => {
-  const auth = FIREBASE_AUTH;
   const Auth = FIREBASE_AUTH2;
 
   const googleProvider = new GoogleAuthProvider();
@@ -54,8 +57,6 @@ const SignUpForm = () => {
         // alert(error.message);
         console.log(error.message);
       });
-
-    
   };
   return (
     <Formik
@@ -65,28 +66,28 @@ const SignUpForm = () => {
         password: "",
         confirmPassword: "",
       }}
-      onSubmit={async (values) => {
-        const { email, password, username } = values;
+      onSubmit={(values) => {
+        const { email, password } = values;
+        const userData = {
+          email: values.email,
+          password: values.password,
+          displayName: values.username,
+          points: 200,
+          userType:'user'
+        };
         setLoading(true);
         try {
-          const response = await createUserWithEmailAndPassword(
+          const response = createUserWithEmailAndPassword(
             auth,
             email,
-            password,
-            // username
-          );
+            password
+          ).then((response) => {
+            const docRef = doc(db, "users", auth.currentUser.uid);
+            setDoc(docRef, { ...userData, id: auth.currentUser.uid });
+            console.log(response.user, response.user.uid);
+          });
 
-          const userData={
-            email,
-            password,
-            username
-          }
-
-          await Promise.all([
-            response,
-
-          ])
-          console.log(response);
+          // console.log(response.user, response.uid);
           alert("your account is created sucessfully.");
         } catch (error) {
           console.log("something went wrong", error.message);
@@ -186,7 +187,11 @@ const SignUpForm = () => {
             {errors.confirmPassword && (
               <Text style={{ color: "red" }}>{errors.confirmPassword}</Text>
             )}
+          </KeyboardAvoidingView>
 
+          {loading ? (
+            <ActivityIndicator size={"large"} color="black" />
+          ) : (
             <View style={styles.btn}>
               <Button
                 shade={"#1B1C1E"}
@@ -216,23 +221,23 @@ const SignUpForm = () => {
                 Continue with Google
               </OutlinedBtn>
             </View>
+          )}
 
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-              }}
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Text>Already had an account? </Text>
+            <FlatButton
+              shade={"#009BFF"}
+              onPress={() => navigation.navigate("Login")}
             >
-              <Text>Already had an account? </Text>
-              <FlatButton
-                shade={"#009BFF"}
-                onPress={() => navigation.navigate("Login")}
-              >
-                Login
-              </FlatButton>
-            </View>
-          </KeyboardAvoidingView>
+              Login
+            </FlatButton>
+          </View>
         </View>
       )}
     </Formik>

@@ -5,7 +5,7 @@ import { Avatar, Button, Dialog, Portal } from "react-native-paper";
 import { ErrorMessage } from "formik";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 
 import { FIREBASE_AUTH, db } from "./../../firebase";
 import InfoHeader from "../infoHeader";
@@ -42,17 +42,18 @@ const Notice = ({ visible, onCancel, navigation }) => {
 };
 
 const Info = ({ navigation }) => {
+  const auth = FIREBASE_AUTH;
+  const user = auth.currentUser;
+
   const [editting, setEditting] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [displayName, setDisplayName] = useState(displayName || "");
-  const [email, setEmail] = useState(email || "");
+  const [displayName, setDisplayName] = useState(user.displayName || "");
 
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectectedImage] = useState(null);
   const [permissionStatus, setPermissionStatus] = useState();
-
-  const auth = FIREBASE_AUTH;
 
   useEffect(() => {
     (async () => {
@@ -75,8 +76,8 @@ const Info = ({ navigation }) => {
   }
 
   async function handleSaved() {
-    const user = auth.currentUser;
-
+    setLoading(true);
+    console.log(user.uid);
     let photoUrl;
 
     if (selectedImage) {
@@ -88,19 +89,22 @@ const Info = ({ navigation }) => {
       photoUrl = url;
     }
 
+    console.log(photoUrl);
+
     const userData = {
       displayName,
-      email,
+      email: user.email,
     };
 
     if (photoUrl) {
-      userData.photoUrl = photoUrl;
+      userData.photoURL = photoUrl;
     }
 
     await Promise.all([
       updateProfile(user, userData),
-      setDoc(doc(db, "users", user.uid), {...userData, uid:user.uid}),
+      updateDoc(doc(db, "users", user.uid), userData),
     ]);
+    setLoading(false);
     setVisible(false);
     setShow(true);
   }
@@ -143,7 +147,7 @@ const Info = ({ navigation }) => {
         }}
       >
         {!selectedImage ? (
-          <MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
+          <Avatar.Image size={80} source={{ uri: user?.photoURL }} />||<MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
         ) : (
           <Avatar.Image size={80} source={{ uri: selectedImage }} />
         )}
@@ -188,11 +192,7 @@ const Info = ({ navigation }) => {
 
         <View style={{ gap: 6 }}>
           <Text style={{ fontSize: 14, fontWeight: "500" }}>Email:</Text>
-          <PaperInput
-            disabled={!editting}
-            value={email}
-            changeText={(val) => setEmail(val)}
-          />
+          <PaperInput disabled={true} value={user.email} />
         </View>
       </View>
 
@@ -218,26 +218,32 @@ const Info = ({ navigation }) => {
           <Dialog.Title style={{ textAlign: "center" }}>
             Discard Changes?
           </Dialog.Title>
-          <Dialog.Content>
-            <Text>{""}</Text>
-          </Dialog.Content>
-          <Dialog.Actions style={{ justifyContent: "center", gap: 57 }}>
-            <Button mode="text" onPress={cancel}>
-              Discard
-            </Button>
-            <Button
-              mode="contained"
-              onPress={handleSaved}
-              style={{
-                height: 38,
-                width: 82,
-                borderRadius: 5,
-                backgroundColor: "orange",
-              }}
-            >
-              Save
-            </Button>
-          </Dialog.Actions>
+          {loading ? (
+            <LoadingOverlay message={"updating Info..."} />
+          ) : (
+            <>
+              <Dialog.Content>
+                <Text>{""}</Text>
+              </Dialog.Content>
+              <Dialog.Actions style={{ justifyContent: "center", gap: 57 }}>
+                <Button mode="text" onPress={cancel}>
+                  Discard
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={handleSaved}
+                  style={{
+                    height: 38,
+                    width: 82,
+                    borderRadius: 5,
+                    backgroundColor: "orange",
+                  }}
+                >
+                  Save
+                </Button>
+              </Dialog.Actions>
+            </>
+          )}
         </Dialog>
         <Notice onCancel={handleReturn} visible={show} />
       </Portal>
