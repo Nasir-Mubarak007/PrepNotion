@@ -68,7 +68,7 @@ const QuestionType_4 = ({ options }) => {
               key={data.id}
               chosen={chosen}
               setChosen={setChosen}
-              //   onTap={() => {}}
+                onTap={() => {}}
             />
           );
         })}

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Avatar, Searchbar } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -18,9 +18,11 @@ import Input from "../components/Input";
 import PaperInput from "../components/PaperInput";
 
 import { FIREBASE_AUTH } from "../firebase";
+import { getName } from "../utils";
 
 const auth = FIREBASE_AUTH;
 const user = auth.currentUser;
+
 
 const Categories = [
   {
@@ -50,6 +52,29 @@ const Mode = [
 ];
 
 export default function Home({ navigation }) {
+
+  const [datas, setDatas] = useState({})
+
+
+  useLayoutEffect(() => {
+    (async () => {
+      const data = await getName();
+      console.log(data);
+      setDatas(data);
+    })();
+  }, []);
+
+  const obj={
+    dName: datas.displayName,
+    dEmail: datas.email,
+    duri: datas.photoURL
+  }
+
+  // console.log(obj.dName)
+  // console.log(obj.duri)
+  
+
+
   function handleOnTap(mode) {
     switch (mode) {
       case "cbt":
@@ -85,7 +110,9 @@ export default function Home({ navigation }) {
     <View style={{ gap: 20, flex: 1 }}>
       <View style={styles.Header}>
         <View style={{ maxWidth: "80%" }}>
-          <Text style={{ fontSize: 24, fontWeight: "600" }}>Hello {user?.displayName||'Ibrahim'}</Text>
+          <Text style={{ fontSize: 24, fontWeight: "600" }}>
+            Hello {obj.dName || "Ibrahim"}
+          </Text>
 
           <Text style={{ fontSize: 20.5 }}>
             What exam are you preparing for today?
@@ -98,7 +125,9 @@ export default function Home({ navigation }) {
         >
           <Avatar.Image
             size={40}
-            source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
+            source={
+              { uri: obj.duri } || require("../assets/images/avatar.png")
+            }
           />
         </TouchableOpacity>
       </View>

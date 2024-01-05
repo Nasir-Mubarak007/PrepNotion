@@ -25,16 +25,19 @@ const options = Questions;
 const typeOne = options.examType === "multipleOptions";
 const type2 = options.examType === "trueOrFalse";
 const type3 = options.examType === "multipleChoice";
-const qusetionType = {
+
+const QuestionType = () => {
   if(typeOne) {
-    return <QuestionType_2 options={options} />;
-  },
+    return <QuestionType_2 options={options} key={options.id}/>;
+  }
 
   if(type2) {
-    return <QuestionType_5 options={options} />;
-  },
+    return <QuestionType_5 options={options} key={options.id}/>;
+  }
 
-  // if(type3){}
+  if(type3) {
+    return <QuestionType_3 options={options} key={options.id}/>;
+  }
 };
 // const options=[
 //   'Albert',
@@ -44,6 +47,8 @@ const qusetionType = {
 // ]
 
 const Confirmation = ({ visible, onCancel, onStart }) => {
+
+  
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={onCancel}>
@@ -108,6 +113,9 @@ const Questionz = ({ navigation, route }) => {
   const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
 
+  
+
+
   function handleCancel() {
     setVisible(false);
   }
@@ -133,19 +141,20 @@ const Questionz = ({ navigation, route }) => {
         onCancel={handleCancel}
         visible={visible}
       />
-      <View style={{ gap: 9, marginLeft: 16, justifyContent:'center' }}>
+      <View style={{ gap: 9, marginLeft: 16, justifyContent: "center" }}>
         <Text style={styles.coloredTitle}>
-          Time: <Timer
-          hours={hour}
-          mins={min}
-          next={() => {
-            navigation.navigate("results", {title:title, time: {hour, min}});
-          }}
-        />
+          Time:{" "}
+          <Timer
+            hours={hour}
+            mins={min}
+            next={() => {
+              navigation.navigate("results", {
+                title: title,
+                time: { hour, min },
+              });
+            }}
+          />
         </Text>
-        
-
-        
 
         <FlatList
           data={subjects}
@@ -189,7 +198,8 @@ const Questionz = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
         >
           {options.map((data) => {
-            return <QuestionType_1 key={data.id} optionz={data} />;
+            // return <QuestionType  key={data.id}/>;
+            <QuestionType_2 options={options} />
           })}
 
           {/* <QuestionType_1 options={options} /> */}

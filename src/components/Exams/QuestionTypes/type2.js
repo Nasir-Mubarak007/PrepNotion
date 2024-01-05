@@ -52,6 +52,7 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
       >
         <Text style={styles.icon}>{"B. " + item.option.b}</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         style={[
           {
@@ -74,6 +75,7 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
       >
         <Text style={styles.icon}>{"C. " + item.option.c}</Text>
       </TouchableOpacity>
+      
       <TouchableOpacity
         style={[
           {

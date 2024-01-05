@@ -78,7 +78,7 @@ const Option = ({ optionz, chosen, setChosen, onTap }) => {
         onTap();
       }}
     >
-      <Text style={styles.icon}> {"B."+optionz.option.b}</Text>
+      <Text style={styles.icon}> {"B." + optionz.option.b}</Text>
       
     </TouchableOpacity>
 

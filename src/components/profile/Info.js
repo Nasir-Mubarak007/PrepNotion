@@ -9,7 +9,7 @@ import { doc, updateDoc } from "firebase/firestore";
 
 import { FIREBASE_AUTH, db } from "./../../firebase";
 import InfoHeader from "../infoHeader";
-import { askPermission, pickImage, uploadImage } from "../../utils";
+import { askPermission, getName, pickImage, uploadImage } from "../../utils";
 import LoadingOverlay from "../ui/LoadingOverlay";
 
 const Notice = ({ visible, onCancel, navigation }) => {
@@ -49,18 +49,18 @@ const Info = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [displayName, setDisplayName] = useState(user.displayName || "");
-
-  const [show, setShow] = useState(false);
-  const [selectedImage, setSelectectedImage] = useState(null);
-  const [permissionStatus, setPermissionStatus] = useState();
-
   useEffect(() => {
     (async () => {
       const status = await askPermission();
       setPermissionStatus(status);
     })();
   }, []);
+
+  const [displayName, setDisplayName] = useState(user?.displayName || "");
+
+  const [show, setShow] = useState(false);
+  const [selectedImage, setSelectectedImage] = useState(null);
+  const [permissionStatus, setPermissionStatus] = useState();
 
   function cancel() {
     setVisible(false);
@@ -147,7 +147,13 @@ const Info = ({ navigation }) => {
         }}
       >
         {!selectedImage ? (
-          <Avatar.Image size={80} source={{ uri: user?.photoURL }} />||<MaterialCommunityIcons name="camera-plus" color={"gray"} size={60} />
+          <Avatar.Image size={80} source={{ uri: user?.photoURL }} /> || (
+            <MaterialCommunityIcons
+              name="camera-plus"
+              color={"gray"}
+              size={60}
+            />
+          )
         ) : (
           <Avatar.Image size={80} source={{ uri: selectedImage }} />
         )}
@@ -192,7 +198,7 @@ const Info = ({ navigation }) => {
 
         <View style={{ gap: 6 }}>
           <Text style={{ fontSize: 14, fontWeight: "500" }}>Email:</Text>
-          <PaperInput disabled={true} value={user.email} />
+          <PaperInput disabled={true} value={user?.email} />
         </View>
       </View>
 
@@ -216,8 +222,9 @@ const Info = ({ navigation }) => {
       <Portal>
         <Dialog visible={visible} onDismiss={cancel}>
           <Dialog.Title style={{ textAlign: "center" }}>
-            Discard Changes?
+            {loading ? "Saving..." : "Discard Changes?"}
           </Dialog.Title>
+
           {loading ? (
             <LoadingOverlay message={"updating Info..."} />
           ) : (

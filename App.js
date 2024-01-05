@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
 import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
+import 'expo-dev-client';
 import { StatusBar } from "expo-status-bar";
 import { User, onAuthStateChanged } from "firebase/auth";
 import * as WebBrowser from "expo-web-browser";
@@ -24,9 +25,9 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(
       FIREBASE_AUTH,
       (user) => {
-        // setLoading(false)
         console.log("user", user);
         setUser(user);
+        // setLoading(false)
       }
       // []
     );

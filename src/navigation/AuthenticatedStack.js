@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -35,6 +35,7 @@ import Years from "../components/Years";
 import ResultsPage from "../components/ResultsPage";
 
 import { FIREBASE_AUTH } from "../firebase";
+import { getName } from "../utils";
 
 const auth = FIREBASE_AUTH;
 const user = auth.currentUser;
@@ -43,6 +44,21 @@ const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function MyTabs() {
+
+  const [datas, setDatas] = useState({})
+
+
+  useLayoutEffect(() => {
+    (async () => {
+      const data = await getName();
+      console.log(data);
+      setDatas(data);
+    })();
+  }, []);
+
+  const obj={
+    duri: datas.photoURL
+  }
   return (
     <Tab.Navigator
       // screenOptions={{ headerShown: false }}
@@ -125,7 +141,7 @@ function MyTabs() {
               // />
               <Avatar.Image
                 size={24}
-                source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
+                source={{uri:obj.duri}||require("../assets/images/avatar.png")}
               />
             );
           },
@@ -237,7 +253,7 @@ const AuthenticatedStack = () => {
         component={ResultsPage}
         options={{
           title: "Results",
-          // headerShown: false
+          headerShown: false
         }}
       />
 

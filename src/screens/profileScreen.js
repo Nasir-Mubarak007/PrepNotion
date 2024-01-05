@@ -1,12 +1,16 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, Card, IconButton, Surface } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+
 import ActionCard from "../components/ui/ActionCard";
-import { FIREBASE_AUTH } from "../firebase";
+import { FIREBASE_AUTH, db } from "../firebase";
+import { getName } from "../utils";
 
 const auth = FIREBASE_AUTH;
 const user = auth.currentUser;
+
+
 
 const Actions = [
   {
@@ -31,6 +35,21 @@ const Actions = [
 
 const ProfileScreen = ({ navigation }) => {
   const [claimed, setClaimed] = useState(false);
+  const [datas, setDatas] = useState({})
+
+
+  useEffect(() => {
+    (async () => {
+      const data = await getName();
+      console.log(data);
+      setDatas(data);
+    })();
+  }, []);
+  
+  const obj={
+    dName: datas.displayName,
+    duri: datas.photoURL
+  }
 
   function handleTap(actions) {
     switch (actions) {
@@ -56,9 +75,9 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.heading}>
           <Avatar.Image
             size={30}
-            source={{uri:user?.photoURL}||require("../assets/images/avatar.png")}
+            source={{uri:obj.duri}||require("../assets/images/avatar.png")}
           />
-          <Text style={styles.headText}>{user.displayName ||'Ibrahim'}</Text>
+          <Text style={styles.headText}>{obj.dName ||'Ibrahim'}</Text>
         </View>
 
         <View>
