@@ -22,9 +22,8 @@ const Subjects = [
   "Animal Husbandry",
 ];
 
-const selected = [];
 
-const CheckBox = ({ item }) => {
+const CheckBox = ({ item, selected }) => {
   const [value, setValue] = useState([]);
   return (
     <View
@@ -39,9 +38,11 @@ const CheckBox = ({ item }) => {
         status={value  ? "unchecked" : "checked"}
         onPress={() => {
           setValue( !value, item);
-          {value ? selected.push(item) : selected.pop(item)}
+          {value ? selected.push(item) : selected.pop()}
 
           console.log(selected)
+          
+
         }}
       />
     </View>
@@ -49,6 +50,7 @@ const CheckBox = ({ item }) => {
 };
 
 const ExamsMode = ({ navigation, route }) => {
+  const [selected, setSelected] = useState([]);
   const title = route.params.title;
 
   return (
@@ -65,7 +67,7 @@ const ExamsMode = ({ navigation, route }) => {
 
         <FlatList
           data={Subjects}
-          renderItem={({ item }) => <CheckBox item={item} />}
+          renderItem={({ item }) => <CheckBox item={item} selected={selected}/>}
           contentContainerStyle={{ gap: 15, paddingBottom: 357 }}
           showsVerticalScrollIndicator={false}
         />
