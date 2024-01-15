@@ -4,140 +4,47 @@ import { Button } from "react-native-paper";
 import { Colors } from "../../../constants/Colors";
 import IconButton from "../../ui/IconButton";
 
-const Option = ({ optionz, chosen, setChosen, onTap }) => {
-  // optionz.map((data,index) => {
-  //   return (
-  // <TouchableOpacity
-  //   // key={index}
-  //   style={[
-  //     {
-  //       padding: 8,
-  //       paddingHorizontal: 12,
-  //       minHeight: 45,
-  //       justifyContent: "center",
-
-  //       maxHeight: 300,
-  //       borderRadius: 4,
-  //       backgroundColor: "white",
-  //       // width: "100%",
-  //     },
-  //     { backgroundColor: chosen ? Colors.Primary200 : "white" },
-  //   ]}
-  //   onPress={() => {
-  //     setChosen(!chosen);
-      // onTap();
-  //   }}
-  // >
-  //   <Text style={styles.icon}> {"A." + optionz.option.a}</Text>
-  // </TouchableOpacity>;
-
-  //   );
-  // })
+const Option = ({ item, chosen, setChosen, onTap }) => {
   return (
     <View style={{ gap: 9 }}>
-      <TouchableOpacity
-        style={[
-          {
-            padding: 8,
-            paddingHorizontal: 12,
-            minHeight: 45,
-            justifyContent: "center",
+      {Object.values(item).map(item => {
+        console.log(item)
+        return (
 
-            maxHeight: 300,
-            borderRadius: 4,
-            backgroundColor: "white",
-            // width: "100%",
-          },
-          { backgroundColor: chosen ? Colors.Primary200 : "white" },
-        ]}
-        onPress={() => {
-          setChosen(!chosen);
-          onTap();
-        }}
-      >
-        <Text style={styles.icon}> {"A." + optionz.option.a}</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            key={item}
+            style={[
+              {
+                padding: 8,
+                paddingHorizontal: 12,
+                minHeight: 45,
+                justifyContent: "center",
+                maxHeight: 300,
+                borderRadius: 4,
+                backgroundColor: "white",
+                // width: "100%",
+              },
+              { backgroundColor: chosen ? Colors.Primary200 : "white" },
+            ]}
+            onPress={() => {
+              setChosen(!chosen);
+              onTap();
+            }}
+          >
+            <Text style={styles.icon}>{item[0].toUpperCase()} {' '} {item[1]}</Text>
+          </TouchableOpacity>
+        )
+      })}
 
-      <TouchableOpacity
-      style={[
-        {
-          padding: 8,
-          paddingHorizontal: 12,
-          minHeight: 45,
-          justifyContent: "center",
 
-          maxHeight: 300,
-          borderRadius: 4,
-          backgroundColor: "white",
-          // width: "100%",
-        },
-        { backgroundColor: chosen ? Colors.Primary200 : "white" },
-      ]}
-      onPress={() => {
-        setChosen(!chosen);
-        onTap();
-      }}
-    >
-      <Text style={styles.icon}> {"B." + optionz.option.b}</Text>
-      
-    </TouchableOpacity>
-
-    <TouchableOpacity
-      style={[
-        {
-          padding: 8,
-          paddingHorizontal: 12,
-          minHeight: 45,
-          justifyContent: "center",
-
-          maxHeight: 300,
-          borderRadius: 4,
-          backgroundColor: "white",
-          // width: "100%",
-        },
-        { backgroundColor: chosen ? Colors.Primary200 : "white" },
-      ]}
-      onPress={() => {
-        setChosen(!chosen);
-        onTap();
-      }}
-    >
-      <Text style={styles.icon}> {"C."+optionz.option.c}</Text>
-      
-    </TouchableOpacity>
-
-    <TouchableOpacity
-      style={[
-        {
-          padding: 8,
-          paddingHorizontal: 12,
-          minHeight: 45,
-          justifyContent: "center",
-
-          maxHeight: 300,
-          borderRadius: 4,
-          backgroundColor: "white",
-          // width: "100%",
-        },
-        { backgroundColor: chosen ? Colors.Primary200 : "white" },
-      ]}
-      onPress={() => {
-        setChosen(!chosen);
-        onTap();
-      }}
-      >
-      <Text style={styles.icon}> {"D."+optionz.option.d}</Text>
-      
-    </TouchableOpacity>
-    
     </View>
   );
 };
 
-const QuestionType_1 = ({ optionz }) => {
+const QuestionType_1 = ({ options }) => {
   const [chosen, setChosen] = useState(false);
   
-  console.log(optionz.question);
+  // console.log(options.question);
   return (
     <View style={styles.questionContainer}>
       <Button
@@ -159,22 +66,22 @@ const QuestionType_1 = ({ optionz }) => {
       </View>
       <View style={{ justifyContent: "center" }}>
         <Text style={{ textAlign: "center", fontSize: 16 }}>
-          {optionz.question}
+          {options.question}
         </Text>
       </View>
 
       <View style={{ marginTop: 20, gap: 16 }}>
-      {/* {optionz.map((data) => {
-      return ( */}
+      {Object.entries(options.option).map((data) => {
+      return (
         <Option
-          optionz={optionz}
-          // key={data.id}
+          options={[data]}
+          key={data}
           chosen={chosen}
           setChosen={setChosen}
           onTap={() => {}}
         />
-        {/* );
-        })} */}
+        );
+        })}
       </View>
     </View>
   );

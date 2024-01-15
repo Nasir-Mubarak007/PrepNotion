@@ -2,6 +2,7 @@
   "expo": {
     "name": "PrepNotion",
     "slug": "PrepNotion",
+    "scheme":"PrepNotion",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -18,22 +19,32 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.logicglide.PrepNotion"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
-    "scheme":"PrepNotion",
     "plugins": [
+
       [
         "expo-image-picker",
         {
           "cameraPermission": "PrepNotion accesses your camera to let you take profile pictures and share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2d886606-582f-4e8b-a8b4-fe57b5108a91"
+      }
+    }
   }
 }

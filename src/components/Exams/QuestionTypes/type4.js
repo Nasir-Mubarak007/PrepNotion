@@ -21,13 +21,20 @@ const Option = ({ item, chosen, setChosen, onTap }) => {
         { backgroundColor: chosen ? Colors.Primary200 : "white" },
       ]}
     >
-      <Checkbox.Item
-        status={chosen ? "checked" : "unchecked"}
-        label={item}
-        onPress={() => {
-          setChosen(!chosen);
-        }}
-      />
+      {Object.values(item).map(item => {
+        
+        return(
+          <Checkbox.Item
+          key={item}
+            status={chosen ? "checked" : "unchecked"}
+            label={`${item[0].toUpperCase()}   ${item[1]}`}
+            onPress={() => {
+              setChosen(!chosen);
+            }}
+          />
+        )
+
+      })}
     </View>
   );
 };
@@ -44,31 +51,32 @@ const QuestionType_4 = ({ options }) => {
           justifyContent: "center",
           marginBottom: 6,
         }}
-        onPress={() => {}}
+        onPress={() => { }}
       >
         <Text style={{ color: "black" }}>Read Passage</Text>
       </Button>
 
       <View style={{ position: "absolute", right: 15, top: 10 }}>
-        <IconButton icon={"volume-high-sharp"} size={24} onPress={() => {}} />
+        <IconButton icon={"volume-high-sharp"} size={24} onPress={() => { }} />
       </View>
       <View style={{ justifyContent: "center" }}>
         <Text style={{ textAlign: "center", fontSize: 16 }}>
-          What is the major difference between Nigeria and other african
-          coutries and their neighbors
+          {options.question}
         </Text>
       </View>
 
       <View style={{ marginTop: 20, gap: 16 }}>
-        {options.map((data, index) => {
-          const [chosen, setChosen] = useState(false);
+        {Object.entries(options.option).map((data) => {
+          const [chosen, setChosen] = useState('');
+          // console.log(data)
+          console.log(chosen)
           return (
             <Option
-              item={data}
-              key={data.id}
+              item={[data]}
+              key={data}
               chosen={chosen}
               setChosen={setChosen}
-                onTap={() => {}}
+              onTap={() => { }}
             />
           );
         })}

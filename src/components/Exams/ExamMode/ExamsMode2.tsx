@@ -83,6 +83,26 @@ const Confirmation = ({
   );
 };
 
+const Chips = ({ item, value, setValue }) => {
+  const [select, setSelect] = useState(false);
+  return (
+    <Chip
+      style={[
+        styles.chip,
+        { backgroundColor: select && !value ? "lightblue" : "white" },
+      ]}
+      mode="outlined"
+      onPress={() => {
+        setSelect(!select);
+        setValue(false);
+      }}
+    >
+      {item}
+    </Chip>
+  );
+};
+
+
 const ExamsMode2 = ({ navigation, route }) => {
   const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -238,18 +258,7 @@ const ExamsMode2 = ({ navigation, route }) => {
               >
                 {selected.map((item: any, index: any) => {
                   return (
-                    <Chip
-                      key={index}
-                      style={[
-                        styles.chip,
-                        { backgroundColor: value ? "lightblue" : "white" },
-                      ]}
-                      mode="outlined"
-                      // selected={value ? true : false}
-                      onPress={() => setValue(value)}
-                    >
-                      {item}
-                    </Chip>
+                    <Chips item={item} value={value} setValue={setValue} key={index}/>
                   );
                 })}
               </View>

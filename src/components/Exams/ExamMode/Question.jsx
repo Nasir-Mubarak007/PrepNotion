@@ -20,35 +20,26 @@ import QuestionType_5 from "../QuestionTypes/type5";
 
 import { Questions } from "../../../constants/Questions";
 import Timer from "../../Timer";
-const options = Questions;
 
-const typeOne = options.examType === "multipleOptions";
-const type2 = options.examType === "trueOrFalse";
-const type3 = options.examType === "multipleChoice";
-
-const QuestionType = () => {
-  if(typeOne) {
-    return <QuestionType_2 options={options} key={options.id}/>;
+const QuestionType = ({ option }) => {
+  if (option.questionType === "multipleChoice") {
+    return <QuestionType_4 options={option} />;
   }
 
-  if(type2) {
-    return <QuestionType_5 options={options} key={options.id}/>;
+  if (option.questionType === "trueOrFalse") {
+    return <QuestionType_2 options={option} />;
   }
 
-  if(type3) {
-    return <QuestionType_3 options={options} key={options.id}/>;
+  // if (option.questionType === "image") {
+  //   return <QuestionType_5 options={option} />;
+  // }
+
+  if (option.questionType === "passage") {
+    return <QuestionType_3 options={option} />;
   }
 };
-// const options=[
-//   'Albert',
-//   'chloe',
-//   'skoe',
-//   'Granvile'
-// ]
 
 const Confirmation = ({ visible, onCancel, onStart }) => {
-
-  
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={onCancel}>
@@ -112,9 +103,10 @@ const Chips = ({ item, value, setValue }) => {
 const Questionz = ({ navigation, route }) => {
   const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
+  // const [points, setPoints] = useState(0);
+  const [index, setIndex] = useState(0);
 
-  
-
+  const currentQuestion = Questions[index];
 
   function handleCancel() {
     setVisible(false);
@@ -181,32 +173,18 @@ const Questionz = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ height: "40%" }}>
-        {/* <FlatList
-          data={options}
-          renderItem={(options) => {
-           return (<QuestionType_1
-              questions={options.question}
-              options={options.option}
-            />)
-          }}
-          keyExtractor={(i) => i.id}
-        /> */}
 
+      <View style={{ height: "40%" }}>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 30, gap: 9 }}
           showsVerticalScrollIndicator={false}
         >
-          {options.map((data) => {
-            // return <QuestionType  key={data.id}/>;
-            <QuestionType_2 options={options} />
-          })}
-
-          {/* <QuestionType_1 options={options} /> */}
-          {/* <QuestionType_2 options={options} />
-           <QuestionType_3 options={options} />
-           <QuestionType_4 options={options} /> */}
-          {/* <QuestionType_5 options={options} /> */}
+          {/* {currentQuestion.map(data =>{
+            return  */}
+            {/* <QuestionType option={currentQuestion} />; */}
+          {/* })} */}
+          
+          <QuestionType_2  options={currentQuestion}/>
         </ScrollView>
       </View>
 
@@ -227,7 +205,9 @@ const Questionz = ({ navigation, route }) => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => {}}
+          onPress={() => {
+            setIndex(index - 1);
+          }}
         >
           <IconButton color={Colors.black} icon={"arrow-back"} size={22} />
         </TouchableOpacity>
@@ -260,7 +240,9 @@ const Questionz = ({ navigation, route }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            onPress={() => {}}
+            onPress={() => {
+              setIndex(index + 1);
+            }}
           >
             <IconButton color={"black"} icon={"arrow-forward"} size={20} />
           </TouchableOpacity>

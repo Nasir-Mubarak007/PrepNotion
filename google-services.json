@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "424965898810",
+    "project_id": "prep-notion",
+    "storage_bucket": "prep-notion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424965898810:android:fd1b99ff91dd75b3da6b03",
+        "android_client_info": {
+          "package_name": "com.logicglide.PrepNotion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424965898810-042ej9b263t6kpbeam1m5mat64ga0sjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logicglide.PrepNotion",
+            "certificate_hash": "05c108fde530e94621690e34d8df18eb3992d6a2"
+          }
+        },
+        {
+          "client_id": "424965898810-ipkb85jc048qiq0nnfe53g6lvfk2t9e6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logicglide.PrepNotion",
+            "certificate_hash": "5535211afe1c4eec621344bced5b90ecf4456dd9"
+          }
+        },
+        {
+          "client_id": "424965898810-favkpbtd5pseh3ruapsa86o8r15difrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBONj3jwX_YLx7qNvYzqqqMighJJpn_1Pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424965898810-5ghv1d94744tqf7r1kosn3odfi7afc17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

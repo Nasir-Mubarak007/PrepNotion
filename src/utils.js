@@ -52,14 +52,16 @@ export async function uploadImage(uri, path, fName) {
 
 export const getName = async () => {
   const user=auth.currentUser
-  const docRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(docRef);
+  // const docRef = doc(db, "users", user.uid);
+  // const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists) {
-    const displayName = docSnap.data();
-    // console.log("name:", docSnap.data());
-    return displayName;
-  }
+  // if (docSnap.exists) {
+  //   const displayName = docSnap.data();
+  //   // console.log("name:", docSnap.data());
+  //   return displayName;
+  // }
+ const displayName= await user
+ return displayName
 };
 // const snapshot = await uploadBytes(imageRef,{})
 // const url= await getDownloadURL(snapshot.ref)

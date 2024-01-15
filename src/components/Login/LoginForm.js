@@ -9,9 +9,8 @@ import {
 } from "firebase/auth";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as WebBrowser from "expo-web-browser"
 import * as Google from "expo-auth-session/providers/google";
-// import * as GoogleAuthentication from 'expo-google-app-auth';
-
 
 import Input from "../Input";
 import Button from "../ui/Button";
@@ -20,6 +19,8 @@ import FlatButton from "../ui/FlatButton";
 import OutlinedBtn from "../ui/OutlinedBtn";
 import { ActivityIndicator } from "react-native-paper";
 // import { async } from "@firebase/util";
+
+WebBrowser.maybeCompleteAuthSession();
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -36,40 +37,40 @@ const LoginForm = () => {
 
   const auth = FIREBASE_AUTH;
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:
-      "424965898810-5cclorm2m955enc51951816b1ftaqspg.apps.googleusercontent.com",
+    androidClientId: "424965898810-5cclorm2m955enc51951816b1ftaqspg.apps.googleusercontent.com",
+    expoClientId: "424965898810-5ghv1d94744tqf7r1kosn3odfi7afc17.apps.googleusercontent.com",
   });
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     // const { id_token } = response.params;
+  //     const credential = GoogleAuthProvider.credential(id_token);
+  //     signInWithCredential(auth, credential);
+  //   }
+  // }, [response]);
 
-  const signInWithGoogle = () => 
-    GoogleAuthentication.logInAsync({
-        androidStandaloneAppClientId: 'ANDROID_STANDALONE_APP_CLIENT_ID',
-        iosStandaloneAppClientId: 'IOS_STANDALONE_APP_CLIENT_ID',
-        scopes: ['profile', 'email']
-    })
-        .then((logInResult) => {
-            if (logInResult.type === 'success') {
-                const { idToken, accessToken } = logInResult;
-                const credential = firebase.auth.GoogleAuthProvider.credential(
-                    idToken,
-                    accessToken
-                );
+  // const signInWithGoogle = () =>
+  //   GoogleAuthentication.logInAsync({
+  //       androidStandaloneAppClientId: 'ANDROID_STANDALONE_APP_CLIENT_ID',
+  //       iosStandaloneAppClientId: 'IOS_STANDALONE_APP_CLIENT_ID',
+  //       scopes: ['profile', 'email']
+  //   })
+  //       .then((logInResult) => {
+  //           if (logInResult.type === 'success') {
+  //               const { idToken, accessToken } = logInResult;
+  //               const credential = firebase.auth.GoogleAuthProvider.credential(
+  //                   idToken,
+  //                   accessToken
+  //               );
 
-                return firebase.auth().signInWithCredential(credential);
-                // Successful sign in is handled by firebase.auth().onAuthStateChanged
-            }
-            return Promise.reject(); // Or handle user cancelation separatedly
-        })
-        .catch((error) => {
-            // ...
-        });
+  //               return firebase.auth().signInWithCredential(credential);
+  //               // Successful sign in is handled by firebase.auth().onAuthStateChanged
+  //           }
+  //           return Promise.reject(); // Or handle user cancelation separatedly
+  //       })
+  //       .catch((error) => {
+  //           // ...
+  //       });
 
   function showHandler() {
     visible ? setVisible(false) : setVisible(true);
@@ -177,15 +178,13 @@ const LoginForm = () => {
                 >
                   Or
                 </Text>
-              </View>
+              </View >
+
               <OutlinedBtn
                 color={"yellow"}
-                icon={"globe-sharp"}
+                icon={"logo-google"}
                 size={22}
-                onPress={
-                  () => promptAsync()
-                  // ()=>signInWithGoogle()
-                }
+                onPress={() => promptAsync({useProxy: true})}
               >
                 Signin with Google
               </OutlinedBtn>

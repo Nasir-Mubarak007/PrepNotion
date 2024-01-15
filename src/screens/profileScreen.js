@@ -41,7 +41,7 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       const data = await getName();
-      console.log(data);
+      // console.log(data);
       setDatas(data);
     })();
   }, []);

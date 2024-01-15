@@ -25,7 +25,7 @@ const Subjects = [
 const selected = [];
 
 const CheckBox = ({ item }) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState([]);
   return (
     <View
       style={{
@@ -36,11 +36,12 @@ const CheckBox = ({ item }) => {
     >
       <RadioButton.Item
         label={item}
-        status={value === item ? "checked" : "unchecked"}
+        status={value  ? "unchecked" : "checked"}
         onPress={() => {
-          setValue(item);
-          selected.push(item);
-          console.log(selected);
+          setValue( !value, item);
+          {value ? selected.push(item) : selected.pop(item)}
+
+          console.log(selected)
         }}
       />
     </View>

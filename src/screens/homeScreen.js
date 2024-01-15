@@ -70,8 +70,6 @@ export default function Home({ navigation }) {
     duri: datas.photoURL
   }
 
-  // console.log(obj.dName)
-  // console.log(obj.duri)
   
 
 

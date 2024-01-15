@@ -7,53 +7,36 @@ import IconButton from "../../ui/IconButton";
 const Option = ({ item, chosen, setChosen, onTap }) => {
   return (
     <View style={{ gap: 9 }}>
-      <TouchableOpacity
-        // key={index}
-        style={[
-          {
-            padding: 8,
-            paddingHorizontal: 12,
-            minHeight: 45,
-            justifyContent: "center",
+      {Object.values(item).map(item => {
 
-            maxHeight: 300,
-            borderRadius: 4,
-            backgroundColor: "white",
-            // width: "100%",
-          },
-          { backgroundColor: chosen ? Colors.Primary200 : "white" },
-        ]}
-        onPress={() => {
-          setChosen(!chosen);
-          onTap();
-        }}
-      >
-        <Text style={styles.icon}> {"A. " + item.option.a}</Text>
-      </TouchableOpacity>
+        return (
 
-      <TouchableOpacity
-        // key={index}
-        style={[
-          {
-            padding: 8,
-            paddingHorizontal: 12,
-            minHeight: 45,
-            justifyContent: "center",
+          <TouchableOpacity
+            key={item}
+            style={[
+              {
+                padding: 8,
+                paddingHorizontal: 12,
+                minHeight: 45,
+                justifyContent: "center",
+                maxHeight: 300,
+                borderRadius: 4,
+                backgroundColor: "white",
+                // width: "100%",
+              },
+              { backgroundColor: chosen ? Colors.Primary200 : "white" },
+            ]}
+            onPress={() => {
+              setChosen(!chosen);
+              onTap();
+            }}
+          >
+            <Text style={styles.icon}> {item[0].toUpperCase()} {' '} {item[1]}</Text>
+          </TouchableOpacity>
+        )
+      })}
 
-            maxHeight: 300,
-            borderRadius: 4,
-            backgroundColor: "white",
-            // width: "100%",
-          },
-          { backgroundColor: chosen ? Colors.Primary200 : "white" },
-        ]}
-        onPress={() => {
-          setChosen(!chosen);
-          onTap();
-        }}
-      >
-        <Text style={styles.icon}> {"B." + item.option.b}</Text>
-      </TouchableOpacity>
+
     </View>
   );
 };
@@ -70,34 +53,33 @@ const QuestionType_5 = ({ options }) => {
           justifyContent: "center",
           marginBottom: 6,
         }}
-        onPress={() => {}}
+        onPress={() => { }}
       >
-        <Text style={{ color: "black" }}>View Illustration</Text>
+        <Text style={{ color: "black" }}> View Illustration</Text>
       </Button>
 
       <View style={{ position: "absolute", right: 15, top: 10 }}>
-        <IconButton icon={"volume-high-sharp"} size={24} onPress={() => {}} />
+        <IconButton icon={"volume-high-sharp"} size={24} onPress={() => { }} />
       </View>
-      {options.map((data) => {
-        return (
-          <View style={{ justifyContent: "center" }}>
-            <Text style={{ textAlign: "center", fontSize: 16 }}>
-              {data.question}
-            </Text>
-          </View>
-        );
-      })}
+      
+      <View style={{ justifyContent: "center", marginTop: 50 }}>
+        <Text style={{ textAlign: "center", fontSize: 16 }}>
+          {options.question}
+        </Text>
+      </View>
 
       <View style={{ marginTop: 20, gap: 16 }}>
-        {options.map((data) => {
-          const [chosen, setChosen] = useState(false);
+        {Object.entries(options.option).map((data) => {
+          const [chosen, setChosen] = useState('');
+          // console.log(data)
+          console.log(chosen)
           return (
             <Option
-              item={data}
-              key={data.id}
+              item={[data]}
+              key={data}
               chosen={chosen}
               setChosen={setChosen}
-              onTap={() => {}}
+              onTap={() => { }}
             />
           );
         })}
