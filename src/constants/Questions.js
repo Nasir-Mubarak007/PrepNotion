@@ -8,7 +8,7 @@ export const Questions = [
       'c': " a white dozen eggs ",
       'd': "dozen white",
     },
-    passage: "most appropriate options",
+    passage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque quis amet inventore quam? Itaque cupiditate accusantium quis. Minima, aperiam. Sed ea sapiente, hic quasi aperiam recusandae dolor repellat aspernatur corporis!",
     image: "",
     answer: "b",
     modal: 'passage',

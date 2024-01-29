@@ -71,7 +71,9 @@ const QuestionType_2 = ({ options }) => {
       console.log(data[0], data[1]);
       return `${data[0].toUpperCase()}. ${data[1]}`
     })
-    const selections = `${options.question}   ${choices} `
+    const selections = `${options.passage} 
+                        ${options.question}   
+                        ${choices} `
 
 
     Speech.speak(selections, optionz)
