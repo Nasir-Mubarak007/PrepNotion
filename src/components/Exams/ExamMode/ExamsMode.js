@@ -5,6 +5,7 @@ import { Checkbox, FAB, RadioButton, Searchbar } from "react-native-paper";
 import { useState } from "react";
 
 const Subjects = [
+  "English",
   "Literature in English",
   "Hausa",
   "Igbo",
@@ -23,8 +24,15 @@ const Subjects = [
 ];
 
 
-const CheckBox = ({ item, selected }) => {
+const CheckBox = ({ item, selected, setSelected }) => {
   const [value, setValue] = useState([]);
+  function handleFilter(item, i) {
+    if (i >= 1) {
+      i = i + 1
+    }
+    const result = selected.splice(i, 1)
+    console.log(i, result)
+  }
   return (
     <View
       style={{
@@ -35,13 +43,14 @@ const CheckBox = ({ item, selected }) => {
     >
       <RadioButton.Item
         label={item}
-        status={value  ? "unchecked" : "checked"}
+        status={value ? "unchecked" : "checked"}
         onPress={() => {
-          setValue( !value, item);
-          {value ? selected.push(item) : selected.pop()}
+          setValue(!value);
+          let element = selected.indexOf(item)
 
+          { value ? selected.push(item) : selected.splice(element, 1) }
           console.log(selected)
-          
+
 
         }}
       />
@@ -67,7 +76,7 @@ const ExamsMode = ({ navigation, route }) => {
 
         <FlatList
           data={Subjects}
-          renderItem={({ item }) => <CheckBox item={item} selected={selected}/>}
+          renderItem={({ item }) => <CheckBox item={item} selected={selected} setSelected={setSelected} />}
           contentContainerStyle={{ gap: 15, paddingBottom: 357 }}
           showsVerticalScrollIndicator={false}
         />

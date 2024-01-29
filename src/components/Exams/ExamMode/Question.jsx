@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Chip, Button, Portal, Dialog } from "react-native-paper";
 
 import QuestionHeader from "../../questionHeader";
@@ -81,7 +81,7 @@ const Confirmation = ({ visible, onCancel, onStart }) => {
   );
 };
 
-const Chips = ({ item, value, setValue }) => {
+const Chips = ({ item, value, setValue, onTap }) => {
   const [select, setSelect] = useState(false);
   return (
     <Chip
@@ -93,6 +93,7 @@ const Chips = ({ item, value, setValue }) => {
       onPress={() => {
         setSelect(!select);
         setValue(false);
+        onTap();
       }}
     >
       {item}
@@ -107,6 +108,23 @@ const Questionz = ({ navigation, route }) => {
   const [index, setIndex] = useState(0);
 
   const currentQuestion = Questions[index];
+  const currentQuestion2 = Questions;
+
+  const decrease = () => {
+    setIndex(index - 1);
+  };
+
+  const changeSubject = (subject) => {
+    let quests;
+    let course = subject;
+    quests = currentQuestion2.filter((subject) => subject.subject === course);
+    console.log(quests);
+    console.log(quests[index]);
+  };
+
+  const increase = () => {
+    setIndex(index + 1);
+  };
 
   function handleCancel() {
     setVisible(false);
@@ -122,8 +140,8 @@ const Questionz = ({ navigation, route }) => {
 
   function submitHandler() {
     setVisible(true);
-    console.log("clicked");
   }
+
   return (
     <View style={{ gap: 18, backgroundColor: "white", flex: 1 }}>
       <QuestionHeader
@@ -151,7 +169,12 @@ const Questionz = ({ navigation, route }) => {
         <FlatList
           data={subjects}
           renderItem={({ item }) => (
-            <Chips item={item} value={value} setValue={setValue} />
+            <Chips
+              item={item}
+              value={value}
+              setValue={setValue}
+              onTap={() => changeSubject(item)}
+            />
           )}
           horizontal
           contentContainerStyle={{ gap: 10, paddingEnd: 59 }}
@@ -168,7 +191,7 @@ const Questionz = ({ navigation, route }) => {
         <Text style={styles.title}>Questions</Text>
         <TouchableOpacity>
           <Text style={[styles.title, styles.blue]}>
-            <IconButton color={Colors.Primary} icon={"calculator"} size={16} />{" "}
+            <IconButton color={Colors.Primary} icon={"calculator"} size={16} />
             Calculator
           </Text>
         </TouchableOpacity>
@@ -181,10 +204,10 @@ const Questionz = ({ navigation, route }) => {
         >
           {/* {currentQuestion.map(data =>{
             return  */}
-            {/* <QuestionType option={currentQuestion} />; */}
+          {/* <QuestionType option={currentQuestion} />; */}
           {/* })} */}
-          
-          <QuestionType_2  options={currentQuestion}/>
+
+          <QuestionType_2 options={currentQuestion} />
         </ScrollView>
       </View>
 
@@ -197,17 +220,23 @@ const Questionz = ({ navigation, route }) => {
         }}
       >
         <TouchableOpacity
-          style={{
-            width: 60,
-            height: 38,
-            backgroundColor: Colors.Primary,
-            borderRadius: 5,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onPress={() => {
-            setIndex(index - 1);
-          }}
+          disabled={index <= 0 ? true : false}
+          activeOpacity={index <= 0 ? 1 : 0.6}
+          style={[
+            {
+              width: 60,
+              height: 38,
+              borderRadius: 5,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: Colors.Primary,
+              opacity: 0.6,
+            },
+            {
+              opacity: index <= 0 ? 0.6 : 1,
+            },
+          ]}
+          onPress={decrease}
         >
           <IconButton color={Colors.black} icon={"arrow-back"} size={22} />
         </TouchableOpacity>
@@ -231,21 +260,25 @@ const Questionz = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <View>
-          <TouchableOpacity
-            style={{
-              width: 60,
-              height: 38,
-              backgroundColor: Colors.Primary,
-              borderRadius: 5,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onPress={() => {
-              setIndex(index + 1);
-            }}
-          >
-            <IconButton color={"black"} icon={"arrow-forward"} size={20} />
-          </TouchableOpacity>
+          {index >= currentQuestion2.length - 1 ? (
+            <Button style={styles.btn} onPress={submitHandler}>
+              Submit
+            </Button>
+          ) : (
+            <TouchableOpacity
+              style={{
+                width: 60,
+                height: 38,
+                backgroundColor: Colors.Primary,
+                borderRadius: 5,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={increase}
+            >
+              <IconButton color={"black"} icon={"arrow-forward"} size={20} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -255,6 +288,12 @@ const Questionz = ({ navigation, route }) => {
 export default Questionz;
 
 const styles = StyleSheet.create({
+  btn: {
+    width: 60,
+    borderRadius: 5,
+    height: 38,
+    backgroundColor: "#FF6E06",
+  },
   chip: {
     minWidth: 38,
     height: 40,
