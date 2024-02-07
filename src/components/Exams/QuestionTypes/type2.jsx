@@ -68,7 +68,7 @@ const QuestionType_2 = ({ options, index, handleAnswer, showModal }) => {
   // };
 
   useEffect(() => {
-    setChosen(null);
+    setChosen(options.answer || null);
     //   setAnswerStatus(null)
   }, [options]);
 

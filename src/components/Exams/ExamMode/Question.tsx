@@ -149,7 +149,10 @@ const Question = ({ navigation, route }) => {
     // setLoading(false);
   }, []);
 
-  const handleAnswerChosen = (questionId: number, answerChosen: string) => {
+  const handleUserAnswerSelection = (
+    questionId: number,
+    answerChosen: string
+  ) => {
     const question = questionData.find(
       (question) => question.id === questionId
     );
@@ -159,12 +162,12 @@ const Question = ({ navigation, route }) => {
       question.answer = answerChosen;
 
       // Create a new array with the updated question
-      const updatedQuestions = questionData.map((q) => {
-        if (q.id === questionId) {
+      const updatedQuestions = questionData.map((questionItem) => {
+        if (questionItem.id === questionId) {
           console.log(question);
           return question;
         }
-        return q;
+        return questionItem;
       });
 
       // Set the state to the new array
@@ -280,7 +283,7 @@ const Question = ({ navigation, route }) => {
           <QuestionType_2
             options={currentQuestion}
             index={index}
-            handleAnswer={handleAnswerChosen}
+            handleAnswer={handleUserAnswerSelection}
             showModal={showModal}
           />
         </ScrollView>
