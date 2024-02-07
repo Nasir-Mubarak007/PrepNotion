@@ -7,7 +7,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import BottomSheets from "../../BottomSheets";
 
 // type navigation= any;
-
+type navigation = any;
 const Confirmation = ({
   visible,
   onCancel,
@@ -101,7 +101,6 @@ const Chips = ({ item, value, setValue }) => {
     </Chip>
   );
 };
-
 
 const ExamsMode2 = ({ navigation, route }) => {
   const [value, setValue] = useState(false);
@@ -258,7 +257,12 @@ const ExamsMode2 = ({ navigation, route }) => {
               >
                 {selected.map((item: any, index: any) => {
                   return (
-                    <Chips item={item} value={value} setValue={setValue} key={index}/>
+                    <Chips
+                      item={item}
+                      value={value}
+                      setValue={setValue}
+                      key={index}
+                    />
                   );
                 })}
               </View>
@@ -269,7 +273,6 @@ const ExamsMode2 = ({ navigation, route }) => {
             <Text style={styles.title}>Duration</Text>
 
             <View style={{ flexDirection: "row", gap: 32 }}>
-
               {/* <TouchableOpacity style={styles.drop}>
                 <Text>{hour ? hour : "H"}</Text>
                 <Text></Text>
@@ -279,17 +282,13 @@ const ExamsMode2 = ({ navigation, route }) => {
                 title={hour ? hour : "H"}
                 onPress={openSheet}
                 style={styles.drop}
-              >
-                
-              </List.Accordion>
+              ></List.Accordion>
 
               <List.Accordion
                 title={min ? min : "M"}
                 style={styles.drop}
                 onPress={openSheet2}
-              >
-                
-              </List.Accordion>
+              ></List.Accordion>
             </View>
           </View>
 
@@ -300,9 +299,7 @@ const ExamsMode2 = ({ navigation, route }) => {
               title={year ? year : "2002/2003"}
               onPress={openSheet3}
               style={{ borderWidth: 1, borderRadius: 5 }}
-            >
-              
-            </List.Accordion>
+            ></List.Accordion>
           </View>
 
           <View>
@@ -332,6 +329,7 @@ const ExamsMode2 = ({ navigation, route }) => {
           min={min}
           year={year}
           data={selected}
+          navigation={navigation}
         />
       </ScrollView>
 

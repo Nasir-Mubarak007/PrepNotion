@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import { getHeaderTitle } from "@react-navigation/elements";
-import { Appbar, Button, Text, Portal, Dialog} from "react-native-paper";
+import { Appbar, Button, Text, Portal, Dialog } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
 import { Colors } from "../constants/Colors";
 
-// import { Colors } from "./constants/Colors";
 
 
 const Confirmation = ({ visible, onCancel, onStart }) => {
@@ -50,8 +50,9 @@ const Confirmation = ({ visible, onCancel, onStart }) => {
   );
 };
 
-const ExamHeader = ({ navigation, title, visible, onTap, onCancel,  }) => {
-  
+const ExamHeader = ({ title, visible, onTap, onCancel, }) => {
+  const navigation = useNavigation();
+  useNavigation
   return (
     <View style={styles.Header}>
       <Appbar.BackAction
@@ -67,7 +68,7 @@ const ExamHeader = ({ navigation, title, visible, onTap, onCancel,  }) => {
 
       <View style={styles.title}>
         <Text variant="titleLarge">{title}</Text>
-      <Button style={styles.btn} onPress={onTap}>Submit</Button>
+        <Button style={styles.btn} onPress={onTap}>Submit</Button>
       </View>
 
       <Confirmation
@@ -79,7 +80,7 @@ const ExamHeader = ({ navigation, title, visible, onTap, onCancel,  }) => {
         }}
       />
     </View>
-    
+
   );
 };
 
@@ -113,6 +114,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent:'space-between'
+    justifyContent: 'space-between'
   },
 });
