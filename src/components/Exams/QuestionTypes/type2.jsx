@@ -6,13 +6,13 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Button, Dialog, Portal } from "react-native-paper";
+import { ActivityIndicator, Button, Modal, Portal } from "react-native-paper";
 import * as Speech from "expo-speech";
 
 import { Colors } from "../../../constants/Colors";
 import IconButton from "../../ui/IconButton";
 
-const Option = ({ item, chosen, setChosen, onTap, options }) => {
+const Option = ({ item, chosen, setChosen, options, onTap }) => {
   return (
     <View style={{ gap: 9 }}>
       {Object.values(item).map((item) => {
@@ -28,7 +28,6 @@ const Option = ({ item, chosen, setChosen, onTap, options }) => {
                 maxHeight: 300,
                 borderRadius: 4,
                 backgroundColor: "white",
-                // width: "100%",
               },
               {
                 backgroundColor:
@@ -36,7 +35,6 @@ const Option = ({ item, chosen, setChosen, onTap, options }) => {
               },
             ]}
             onPress={() => {
-              // handleAnswerPicked(item[0]);
               setChosen(item[0]);
               onTap(options.id, item[0]);
             }}
@@ -51,28 +49,17 @@ const Option = ({ item, chosen, setChosen, onTap, options }) => {
   );
 };
 
-const QuestionType_2 = ({ options, index, handleAnswer, showModal }) => {
+const QuestionType_2 = ({ options, index, handleAnswer }) => {
   const [ispreping, setIspreping] = useState(false);
   const [visible, setVisible] = useState(false);
   const [chosen, setChosen] = useState(null);
 
   // answers
-  const [answers, setAnswers] = useState([]);
-  //  answer status
-
-  // const questionTouched = () => {
-  //   if (chosen) {
-  //     const item = { question: index + 1, selectedAnswer: chosen };
-  //     answers.push(item);
-  //   }
-  // };
+  // const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     setChosen(options.answer || null);
-    //   setAnswerStatus(null)
   }, [options]);
-
-  console.log(answers);
 
   // const handleModal = (mode) => {
   //   switch (mode) {
@@ -84,6 +71,10 @@ const QuestionType_2 = ({ options, index, handleAnswer, showModal }) => {
   //       break;
   //   }
   // }
+
+  const showModal = () => {
+    setVisible(true);
+  };
 
   const handleSpeak = () => {
     setIspreping(true);
@@ -128,46 +119,46 @@ const QuestionType_2 = ({ options, index, handleAnswer, showModal }) => {
 
   return (
     <View style={styles.questionContainer}>
-      {options.modal && (
-        <Button
-          style={{
-            width: 200,
-            backgroundColor: "#4F525433",
-            borderRadius: 5,
-            height: 35,
-            justifyContent: "center",
-            alignSelf: "center",
-            marginBottom: 6,
-          }}
-          onPress={() => {
-            showModal();
-          }}
-        >
-          <Text style={{ color: "black" }}>{options.modal}</Text>
-        </Button>
-      )}
+      <View style={styles.header}>
+        <Text style={{ fontWeight: "500", fontSize: 14 }}>
+          question {index + 1}
+        </Text>
 
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          width: 30,
-          right: 15,
-          top: 10,
-        }}
-        activeOpacity={0.4}
-        onPress={() => handleSpeak()}
-      >
-        {ispreping ? (
-          <ActivityIndicator size={"small"} />
-        ) : (
-          <IconButton
-            icon={"volume-high-sharp"}
-            size={24}
-            color={"black"}
-            onPress={() => {}}
-          />
+        {options.modal && (
+          <Button
+            style={{
+              width: 170,
+              backgroundColor: "#4F525433",
+              borderRadius: 5,
+              height: 35,
+              marginBottom: 6,
+            }}
+            onPress={showModal}
+          >
+            <Text style={{ color: "black" }}>{options.modal}</Text>
+          </Button>
         )}
-      </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            width: 30,
+          }}
+          activeOpacity={0.4}
+          onPress={() => handleSpeak()}
+        >
+          {ispreping ? (
+            <ActivityIndicator size={"small"} />
+          ) : (
+            <IconButton
+              icon={"volume-high-sharp"}
+              size={24}
+              color={"black"}
+              onPress={() => {}}
+            />
+          )}
+        </TouchableOpacity>
+      </View>
+
       <View style={{ justifyContent: "center", marginTop: 50 }}>
         <Text style={{ textAlign: "center", fontSize: 16 }}>
           {options.question}
@@ -189,18 +180,48 @@ const QuestionType_2 = ({ options, index, handleAnswer, showModal }) => {
         })}
       </View>
 
-      {/* <Portal>
-        <Modal visible={visible} onDismiss={() => setVisible(false)} contentContainerStyle={{ justifyContent: 'center', borderRadius: 9, width: '99%', backgroundColor: "white", padding: 20 }}>
-          <ScrollView>
-            <TouchableOpacity style={{
-              position: "absolute", width: 30, right: 15, top: 5
-            }} activeOpacity={0.4} onPress={() => handleRead()}>
-              {ispreping ? <ActivityIndicator size={"small"} /> : <IconButton icon={"volume-high-sharp"} size={24} />}
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          contentContainerStyle={{
+            justifyContent: "center",
+            borderRadius: 9,
+            width: "99%",
+            height: "67%",
+            backgroundColor: "white",
+            padding: 20,
+          }}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => setVisible(false)}>
+              <IconButton icon={"close"} size={24} />
             </TouchableOpacity>
-            <Text>{options.passage}</Text>
+
+            <Text style={{ fontWeight: "400", fontSize: 20 }}>Passage</Text>
+
+            <TouchableOpacity
+              style={{
+                width: 30,
+              }}
+              activeOpacity={0.4}
+              onPress={() => handleRead()}
+            >
+              {ispreping ? (
+                <ActivityIndicator size={"small"} />
+              ) : (
+                <IconButton icon={"volume-high-sharp"} size={24} />
+              )}
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView>
+            <Text style={{ fontWeight: "300", fontSize: 20 }}>
+              {options.passage}
+            </Text>
           </ScrollView>
         </Modal>
-      </Portal> */}
+      </Portal>
     </View>
   );
 };
@@ -209,10 +230,8 @@ export default QuestionType_2;
 
 const styles = StyleSheet.create({
   questionContainer: {
-    // height: 438,
     padding: 13,
     paddingBottom: 22,
-    paddingHorizontal: 15,
     marginHorizontal: 15,
     backgroundColor: "#F3F2F2",
     borderRadius: 20,
@@ -220,5 +239,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: Colors.black,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });

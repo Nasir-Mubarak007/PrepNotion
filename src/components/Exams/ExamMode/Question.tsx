@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Chip, Button, Portal, Dialog } from "react-native-paper";
 
 import QuestionHeader from "../../questionHeader";
@@ -125,7 +125,7 @@ const Question = ({ navigation, route }) => {
   const [questionData, setQuestionData] = useState([...Questions]);
 
   const currentQuestion = questionData[index];
-  const currentQuestion2 = questionData;
+  const totalQuestions = questionData;
 
   const title = route.params.title;
   console.log(title);
@@ -143,6 +143,7 @@ const Question = ({ navigation, route }) => {
       }))
     );
 
+    // to fetch questions from server
     // setLoading(true);
     // ....
     // setQuestionData(res.data);
@@ -176,6 +177,27 @@ const Question = ({ navigation, route }) => {
     }
   };
 
+  const renderItem = useCallback(
+    ({ item, index }) => (
+      <TouchableOpacity
+        style={[
+          styles.question,
+          {
+            backgroundColor: item.answer ? Colors.Primary : "white",
+            borderWidth: item.answer ? 0 : 1,
+            borderColor: index === item ? Colors.Secondary60 : "black",
+          },
+        ]}
+        onPress={() => {
+          setIndex(index), closeSheet();
+        }}
+      >
+        <Text>{index + 1}</Text>
+      </TouchableOpacity>
+    ),
+    []
+  );
+
   const decrease = () => {
     setIndex(index - 1);
   };
@@ -204,8 +226,11 @@ const Question = ({ navigation, route }) => {
 
   function showModal() {
     bottomSheetRef.current?.expand();
-    console.log("first");
   }
+  // function closeModal() {
+  //   bottomSheetRef.current?.close();
+  //   console.log("first");
+  // }
 
   {
     isLoading && <Text>Loading...</Text>;
@@ -219,6 +244,7 @@ const Question = ({ navigation, route }) => {
         onCancel={handleCancel}
         visible={visible}
       />
+
       <View style={{ gap: 9, marginLeft: 16, justifyContent: "center" }}>
         <Text style={styles.coloredTitle}>
           Time:{" "}
@@ -284,10 +310,16 @@ const Question = ({ navigation, route }) => {
             options={currentQuestion}
             index={index}
             handleAnswer={handleUserAnswerSelection}
-            showModal={showModal}
           />
         </ScrollView>
       </View>
+
+      <Modal
+        ref={bottomSheetRef}
+        data={totalQuestions}
+        renderItem={renderItem}
+        subject={subject}
+      />
 
       <View
         style={{
@@ -333,7 +365,7 @@ const Question = ({ navigation, route }) => {
             justifyContent: "center",
             borderWidth: 0.9,
           }}
-          onPress={() => {}}
+          onPress={showModal}
         >
           <IconButton
             color={Colors.black}
@@ -343,16 +375,8 @@ const Question = ({ navigation, route }) => {
           />
         </TouchableOpacity>
 
-        <Modal
-          ref={bottomSheetRef}
-          passage={currentQuestion.passage}
-          data={undefined}
-          renderItem={undefined}
-          close={closeSheet}
-        />
-
         <View>
-          {index >= currentQuestion2.length - 1 ? (
+          {index >= totalQuestions.length - 1 ? (
             <Button style={styles.btn} onPress={submitHandler}>
               Submit
             </Button>
@@ -396,6 +420,16 @@ const styles = StyleSheet.create({
     height: 40,
 
     justifyContent: "center",
+  },
+
+  question: {
+    minWidth: 30,
+    height: 30,
+    borderWidth: 1,
+    borderColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 6,
   },
 
   coloredTitle: {
