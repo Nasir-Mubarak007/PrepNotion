@@ -319,6 +319,7 @@ const Question = ({ navigation, route }) => {
         data={totalQuestions}
         renderItem={renderItem}
         subject={subject}
+        currQuestion={currentQuestion}
       />
 
       <View

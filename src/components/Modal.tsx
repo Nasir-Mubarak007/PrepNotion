@@ -22,12 +22,13 @@ interface Props {
   data: any;
   renderItem: any;
   subject: any;
+  currQuestion: any;
 }
 type Ref = BottomSheet;
 
 const Modal = forwardRef<Ref, Props>((props, ref) => {
   const snapPoint = useMemo(() => ["62%"], []);
-  const questionTouched = () => {
+  const questionTouched = useMemo(() => {
     let answered = props.data.reduce((sum, question) => {
       if (question.answer) {
         return sum + 1;
@@ -36,7 +37,7 @@ const Modal = forwardRef<Ref, Props>((props, ref) => {
       return sum;
     }, 0);
     return answered;
-  };
+  }, [props.currQuestion]);
 
   return (
     <BottomSheet
@@ -52,7 +53,7 @@ const Modal = forwardRef<Ref, Props>((props, ref) => {
           <Text>{props.subject}</Text>
 
           <Text style={{ fontWeight: "400", fontSize: 20 }}>
-            <Text style={{ color: Colors.Primary }}>{questionTouched()}</Text> /
+            <Text style={{ color: Colors.Primary }}>{questionTouched}</Text> /
             {props.data.length}
           </Text>
         </View>
