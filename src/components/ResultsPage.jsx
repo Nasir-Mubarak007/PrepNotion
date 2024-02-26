@@ -4,7 +4,12 @@ import Button from "./ui/Button";
 import OutlinedBtn from "./ui/OutlinedBtn";
 import { Colors } from "../constants/Colors";
 
-const ResultsPage = ({ navigation }) => {
+const ResultsPage = ({ navigation, route }) => {
+  const title = route.params.title;
+  const time = route.params.time;
+  const year = route.params.year;
+  const subjects = route.params.subjects;
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -33,7 +38,17 @@ const ResultsPage = ({ navigation }) => {
               </OutlinedBtn>
             </View>
             <View style={styles.btn}>
-              <Button shade={Colors.Primary} onPress={() => {}}>
+              <Button
+                shade={Colors.Primary}
+                onPress={() => {
+                  navigation.navigate("Stats & Results", {
+                    title: title,
+                    year: year,
+                    data: subjects,
+                    title: title,
+                  });
+                }}
+              >
                 Answers
               </Button>
             </View>

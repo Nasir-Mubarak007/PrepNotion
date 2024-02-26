@@ -124,7 +124,7 @@ const QuestionType_2 = ({ options, index, handleAnswer }) => {
           question {index + 1}
         </Text>
 
-        {options.modal && (
+        {options?.modal && (
           <Button
             style={{
               width: 170,
@@ -135,7 +135,7 @@ const QuestionType_2 = ({ options, index, handleAnswer }) => {
             }}
             onPress={showModal}
           >
-            <Text style={{ color: "black" }}>{options.modal}</Text>
+            <Text style={{ color: "black" }}>{options?.modal}</Text>
           </Button>
         )}
 

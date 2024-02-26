@@ -15,6 +15,7 @@ import StudyMode from "../components/home/pages/StudyMode";
 import Uiux from "../components/categories/pages/Uiux";
 import AllExams from "../screens/allExams";
 import CustomNavigationBar from "../components/CustomNavigationBar";
+import CustomNavigationBar2 from "../components/CustomNavigationBar2";
 import ProfileScreen from "../screens/profileScreen";
 import { Avatar } from "react-native-paper";
 import Jamb from "../components/Exams/Jamb";
@@ -33,9 +34,11 @@ import ExamsMode2 from "../components/Exams/ExamMode/ExamsMode2";
 import Questionz from "../components/Exams/ExamMode/Question";
 import Years from "../components/Years";
 import ResultsPage from "../components/ResultsPage";
+import AnalysisPage from "../components/AnalysisPage";
 
 import { FIREBASE_AUTH } from "../firebase";
 import { getName } from "../utils";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 const auth = FIREBASE_AUTH;
 const user = auth.currentUser;
@@ -56,7 +59,7 @@ function MyTabs() {
     })();
   }, []);
 
-  const obj={
+  const obj = {
     duri: datas.photoURL
   }
   return (
@@ -141,7 +144,7 @@ function MyTabs() {
               // />
               <Avatar.Image
                 size={24}
-                source={{uri:obj.duri}||require("../assets/images/avatar.png")}
+                source={{ uri: obj.duri } || require("../assets/images/avatar.png")}
               />
             );
           },
@@ -157,6 +160,17 @@ const AuthenticatedStack = () => {
       screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}
       initialRouteName="Home"
     >
+      <Stack.Screen
+        name="Stats & Results"
+        component={AnalysisPage}
+        options={{
+          header: (props, style) => <CustomNavigationBar2 {...props}
+            style={{ backgroundColor: '#F2F2F2' }}
+          />,
+          title: "Analysis & Results"
+        }}
+      />
+
       <Stack.Screen
         name="buy"
         component={BuyPoints}

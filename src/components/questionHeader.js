@@ -50,7 +50,7 @@ const Confirmation = ({ visible, onCancel, onStart }) => {
   );
 };
 
-const ExamHeader = ({ title, visible, onTap, onCancel, }) => {
+const ExamHeader = ({ title, hour, min, year, subjects, visible, onTap, onCancel, }) => {
   const navigation = useNavigation();
   useNavigation
   return (
@@ -75,7 +75,12 @@ const ExamHeader = ({ title, visible, onTap, onCancel, }) => {
         visible={visible}
         onCancel={onCancel}
         onStart={() => {
-          navigation.navigate("results");
+          navigation.navigate("results", {
+            title: title,
+            time: { hour, min },
+            year: year,
+            subjects: subjects,
+          });
           onCancel();
         }}
       />

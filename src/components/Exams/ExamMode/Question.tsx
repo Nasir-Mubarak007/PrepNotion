@@ -6,7 +6,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { Chip, Button, Portal, Dialog } from "react-native-paper";
 
 import QuestionHeader from "../../questionHeader";
@@ -79,22 +85,32 @@ import Timer from "../../Timer";
 // };
 
 // chip (button) of a subject to select it
-const Chips = ({ item, value, setValue, onTap }) => {
-  const [select, setSelect] = useState(false);
+const Chips = ({ item, value, setValue, onTap, first }) => {
+  const [select, setSelect] = useState(first);
   return (
     <Chip
       style={[
         styles.chip,
-        { backgroundColor: select && !value ? "lightblue" : "white" },
+        {
+          backgroundColor: select && value === item ? Colors.Primary : "white",
+        },
+        {
+          borderColor: select && value === item ? Colors.Primary : Colors.black,
+        },
       ]}
       mode="outlined"
       onPress={() => {
-        setSelect(!select);
-        setValue(false);
+        setSelect(item);
+        setValue(item);
         onTap();
+        console.log(select);
       }}
     >
-      {item}
+      <Text
+        style={{ color: select && value === item ? "white" : Colors.black }}
+      >
+        {item}
+      </Text>
     </Chip>
   );
 };
@@ -124,13 +140,26 @@ const Question = ({ navigation, route }) => {
 
   const [questionData, setQuestionData] = useState([...Questions]);
 
+  const [currentQuestions, setCurrentQuestions] = useState([]);
+  const [overallQuestions, setoverallQuestions] = useState([]);
+
+  useLayoutEffect(() => {
+    const filteredQuestions = questionData.filter((question) => {
+      return question.subject === subject;
+    });
+
+    setCurrentQuestions(filteredQuestions);
+  }, [subject]);
+  console.log("filtered questions", currentQuestions, overallQuestions);
+
   const currentQuestion = questionData[index];
-  const totalQuestions = questionData;
+  // questionData[index];
+  const totalQuestions = currentQuestions;
+  // questionData;
 
   const title = route.params.title;
   console.log(title);
   const hour = route.params.hour;
-  console.log(hour);
   const min = route.params.min;
   const year = route.params.year;
   const subjects = route.params.data;
@@ -154,7 +183,7 @@ const Question = ({ navigation, route }) => {
     questionId: number,
     answerChosen: string
   ) => {
-    const question = questionData.find(
+    const question = currentQuestions.find(
       (question) => question.id === questionId
     );
 
@@ -183,8 +212,8 @@ const Question = ({ navigation, route }) => {
         style={[
           styles.question,
           {
-            backgroundColor: item.answer ? Colors.Primary : "white",
-            borderWidth: item.answer ? 0 : 1,
+            backgroundColor: item?.answer ? Colors.Primary : "white",
+            borderWidth: item?.answer ? 0 : 1,
             borderColor: index === item ? Colors.Secondary60 : "black",
           },
         ]}
@@ -192,7 +221,9 @@ const Question = ({ navigation, route }) => {
           setIndex(index), closeSheet();
         }}
       >
-        <Text>{index + 1}</Text>
+        <Text style={{ color: item?.answer ? "white" : "black" }}>
+          {index + 1}
+        </Text>
       </TouchableOpacity>
     ),
     []
@@ -240,6 +271,10 @@ const Question = ({ navigation, route }) => {
     <View style={{ gap: 18, backgroundColor: "white", flex: 1 }}>
       <QuestionHeader
         title={title}
+        min={min}
+        hour={hour}
+        year={year}
+        subjects={subjects}
         onTap={submitHandler}
         onCancel={handleCancel}
         visible={visible}
@@ -255,6 +290,8 @@ const Question = ({ navigation, route }) => {
               navigation.navigate("results", {
                 title: title,
                 time: { hour, min },
+                year: year,
+                subjects: subjects,
               });
             }}
           />
@@ -267,6 +304,7 @@ const Question = ({ navigation, route }) => {
               item={item}
               value={value}
               setValue={setValue}
+              first={subjects[0]}
               onTap={() => changeSubject(item)}
             />
           )}
