@@ -25,64 +25,7 @@ import BottomSheet from "@gorhom/bottom-sheet";
 
 import { Questions } from "../../../constants/Questions";
 import Timer from "../../Timer";
-
-// const QuestionType = ({ option }) => {
-//   if (option.questionType === "multipleChoice") {
-//     return <QuestionType_4 options={option} />;
-//   }
-
-//   if (option.questionType === "trueOrFalse") {
-//     return <QuestionType_2 options={option} />;
-//   }
-
-//   // if (option.questionType === "image") {
-//   //   return <QuestionType_5 options={option} />;
-//   // }
-
-//   if (option.questionType === "passage") {
-//     return <QuestionType_3 options={option} />;
-//   }
-// };
-// modal for confirming submision
-// const Confirmation = ({ visible, onCancel, onStart }) => {
-//   return (
-//     <Dialog visible={visible} onDismiss={onCancel}>
-//       <Dialog.Title style={{ textAlign: "center" }}>
-//         Confirm Submission
-//       </Dialog.Title>
-//       <Dialog.Content>
-//         <View style={{ gap: 20 }}>
-//           <Text style={styles.title}>Are you sure you want to submit?</Text>
-//         </View>
-//       </Dialog.Content>
-//       <Dialog.Actions style={{ justifyContent: "center", gap: 23 }}>
-//         <Button
-//           onPress={onCancel}
-//           style={{
-//             height: 38,
-//             width: 82,
-//             borderRadius: 5,
-//           }}
-//         >
-//           Cancel
-//         </Button>
-
-//         <Button
-//           mode="contained"
-//           onPress={onStart}
-//           style={{
-//             height: 38,
-//             width: 82,
-//             borderRadius: 5,
-//             backgroundColor: Colors.Primary,
-//           }}
-//         >
-//           Start
-//         </Button>
-//       </Dialog.Actions>
-//     </Dialog>
-//   );
-// };
+import LoadingOverlay from "../../ui/LoadingOverlay";
 
 // chip (button) of a subject to select it
 const Chips = ({ item, value, setValue, onTap, first }) => {
@@ -130,10 +73,12 @@ const Chips = ({ item, value, setValue, onTap, first }) => {
 // };
 
 const Question = ({ navigation, route }) => {
+  const subjects = route.params.data;
+
   const [value, setValue] = useState(false);
   const [visible, setVisible] = useState(false);
   const [index, setIndex] = useState(0);
-  const [subject, setSubject] = useState(null);
+  const [subject, setSubject] = useState(subjects[0]);
   const [isLoading, setIsLoading] = useState(false);
 
   // const [show, setShow] = useState(false);
@@ -143,14 +88,34 @@ const Question = ({ navigation, route }) => {
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [overallQuestions, setoverallQuestions] = useState([]);
 
+  const changeSubject = (course) => {
+    setSubject(course);
+  };
+
   useLayoutEffect(() => {
+    setIsLoading(true);
     const filteredQuestions = questionData.filter((question) => {
       return question.subject === subject;
     });
 
     setCurrentQuestions(filteredQuestions);
-  }, [subject]);
-  console.log("filtered questions", currentQuestions, overallQuestions);
+    setIsLoading(false);
+
+    if (overallQuestions.includes(subject)) {
+      return;
+    } else {
+      setoverallQuestions((entry) => [
+        ...entry,
+        { subject: subject, questions: currentQuestions },
+      ]);
+    }
+  }, [subject, changeSubject]);
+  console.log(
+    "filtered questions",
+    currentQuestions,
+    "overall",
+    overallQuestions
+  );
 
   const currentQuestion = questionData[index];
   // questionData[index];
@@ -162,7 +127,6 @@ const Question = ({ navigation, route }) => {
   const hour = route.params.hour;
   const min = route.params.min;
   const year = route.params.year;
-  const subjects = route.params.data;
 
   useEffect(() => {
     setQuestionData(() =>
@@ -174,6 +138,7 @@ const Question = ({ navigation, route }) => {
 
     // to fetch questions from server
     // setLoading(true);
+    //  e.g `https://jsonplaceholder.typicode.com/${category}/${year}/${title}/${subjects}`
     // ....
     // setQuestionData(res.data);
     // setLoading(false);
@@ -233,10 +198,6 @@ const Question = ({ navigation, route }) => {
     setIndex(index - 1);
   };
 
-  const changeSubject = (subject) => {
-    setSubject(subject);
-  };
-
   const increase = () => {
     setIndex(index + 1);
   };
@@ -258,13 +219,9 @@ const Question = ({ navigation, route }) => {
   function showModal() {
     bottomSheetRef.current?.expand();
   }
-  // function closeModal() {
-  //   bottomSheetRef.current?.close();
-  //   console.log("first");
-  // }
 
   {
-    isLoading && <Text>Loading...</Text>;
+    isLoading && <LoadingOverlay message="Loading..." />;
   }
 
   return (
@@ -292,6 +249,7 @@ const Question = ({ navigation, route }) => {
                 time: { hour, min },
                 year: year,
                 subjects: subjects,
+                totalQuestions: overallQuestions,
               });
             }}
           />

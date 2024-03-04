@@ -10,12 +10,14 @@ const AnalysisPage = ({ route }) => {
   const title = route.params.title;
   // const time = route.params.time;
   const subjects = route.params.data;
+  const questions = route.params.questions;
 
   const [value, setValue] = React.useState("statistics");
   const MyComponent = () => {
     if (value === "statistics")
       return <Stats title={title} subjects={subjects} />;
-    if (value === "Q&A") return <QuestionAnswer />;
+    if (value === "Q&A")
+      return <QuestionAnswer subjects={subjects} questions={questions} />;
   };
   return (
     <View style={styles.container}>

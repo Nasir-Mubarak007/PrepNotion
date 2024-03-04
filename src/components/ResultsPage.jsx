@@ -9,6 +9,7 @@ const ResultsPage = ({ navigation, route }) => {
   const time = route.params.time;
   const year = route.params.year;
   const subjects = route.params.subjects;
+  const totalQuestions = route.params.totalQuestions;
 
   return (
     <View style={{ flex: 1 }}>
@@ -46,6 +47,7 @@ const ResultsPage = ({ navigation, route }) => {
                     year: year,
                     data: subjects,
                     title: title,
+                    questions: totalQuestions,
                   });
                 }}
               >

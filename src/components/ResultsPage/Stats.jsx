@@ -31,6 +31,7 @@ const Stats = ({ title, subjects }) => {
         {subjects.map((Subject, ind) => (
           <View key={ind}>
             <Text>{Subject}</Text>
+            <View></View>
           </View>
         ))}
       </View>
